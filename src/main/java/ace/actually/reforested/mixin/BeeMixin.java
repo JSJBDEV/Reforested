@@ -1,6 +1,8 @@
 package ace.actually.reforested.mixin;
 
 import ace.actually.reforested.bees.IReforestedBee;
+import net.minecraft.block.BeehiveBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -15,6 +17,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BeeEntity.class)
 public abstract class BeeMixin extends AnimalEntity implements IReforestedBee {
@@ -61,12 +64,14 @@ public abstract class BeeMixin extends AnimalEntity implements IReforestedBee {
     }
     @Inject(method = "tick", at = @At("TAIL"))
     protected void tick(CallbackInfo ci) {
-       if(!getEntityWorld().isClient && reforested$getBeeType()==null || reforested$getBeeType().isEmpty())
+       if(!getEntityWorld().isClient && (reforested$getBeeType()==null || reforested$getBeeType().isEmpty()))
        {
+
            reforested$setBeeType(beeTypes[Random.create().nextInt(beeTypes.length)]);
            markEffectsDirty();
        }
 
     }
+
 
 }
