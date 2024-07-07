@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "ace.actually.reforested.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BeeMixin",
+    "ExampleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BeeRenderMixin"
+  ]
+}

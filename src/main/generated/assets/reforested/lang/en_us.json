@@ -1,0 +1,18 @@
+{
+  "block.reforested.larch_button": "Larch Button",
+  "block.reforested.larch_door": "Larch Door",
+  "block.reforested.larch_fence": "Larch Fence",
+  "block.reforested.larch_fence_gate": "Larch Fence Gate",
+  "block.reforested.larch_hanging_sign": "Larch Hanging Sign",
+  "block.reforested.larch_log": "Larch Log",
+  "block.reforested.larch_planks": "Larch Planks",
+  "block.reforested.larch_pressure_plate": "Larch Pressure Plate",
+  "block.reforested.larch_sapling": "Larch Sapling",
+  "block.reforested.larch_sign": "Larch Sign",
+  "block.reforested.larch_slab": "Larch Slab",
+  "block.reforested.larch_stairs": "Larch Stairs",
+  "block.reforested.larch_trapdoor": "Larch Trapdoor",
+  "block.reforested.larch_wood": "Larch Wood",
+  "block.reforested.stripped_larch_log": "Stripped Larch Log",
+  "itemgroup.reforested": "Reforested"
+}
