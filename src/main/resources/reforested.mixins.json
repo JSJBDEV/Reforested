@@ -3,6 +3,8 @@
   "package": "ace.actually.reforested.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BeehiveDataMixin",
+    "BeehiveEntityMixin",
     "BeeMixin",
     "BlockEntityTypeMixin",
     "ExampleMixin"

@@ -22,6 +22,7 @@ public class RModelProvider extends FabricModelProvider {
             gen.registerTintableCross(builder.SAPLINGS, BlockStateModelGenerator.TintType.NOT_TINTED);
             gen.registerCubeAllModelTexturePool(builder.PLANKS).family(builder.FAMILY);
             gen.registerHangingSign(builder.STRIPPED_LOG,builder.HANGING_SIGN,builder.WALL_HANGING_SIGN);
+
         }
     }
 

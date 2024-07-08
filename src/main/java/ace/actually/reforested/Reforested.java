@@ -1,5 +1,6 @@
 package ace.actually.reforested;
 
+import ace.actually.reforested.bees.blocks.ApiaryBlock;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import com.google.common.collect.ImmutableSet;
@@ -7,10 +8,8 @@ import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BeehiveBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -26,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -50,6 +50,8 @@ public class Reforested implements ModInitializer {
 		WOOD_BLOCKS.add(new WoodBlockBuilder("larch"));
 	}
 
+
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -67,11 +69,20 @@ public class Reforested implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 	}
 
-	public static final BeehiveBlock APIARY_BLOCK = new BeehiveBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));
+	public static final ApiaryBlock APIARY_BLOCK = new ApiaryBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
 
+
+	}
+
+	public static List<Block> ADD_BEEHIVE = new ArrayList<>();
+	static
+	{
+		ADD_BEEHIVE.add(Blocks.BEEHIVE);
+		ADD_BEEHIVE.add(Blocks.BEE_NEST);
+		ADD_BEEHIVE.add(Reforested.APIARY_BLOCK);
 	}
 
 
@@ -108,6 +119,8 @@ public class Reforested implements ModInitializer {
 			}
 		});
 	}
+
+
 
 
 
