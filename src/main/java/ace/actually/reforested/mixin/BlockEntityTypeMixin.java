@@ -3,7 +3,6 @@ package ace.actually.reforested.mixin;
 import ace.actually.reforested.Reforested;
 import com.mojang.datafixers.types.Type;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -16,10 +15,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Why we need this mixin:
+ * - we want to add new beehives that do different things
+ * - we can only add new beehives by telling the beehive block entity that it also likes our custom blocks
+ * - this is extendable using the ADD_BEEHIVE list.
+ */
 @Mixin(BlockEntityType.class)
 public class BlockEntityTypeMixin {
-
-
 
     @Inject(at = @At("HEAD"), method = "create", cancellable = true)
     private static <T extends BlockEntity> void create(String id, BlockEntityType.Builder<T> builder, CallbackInfoReturnable<BlockEntityType<T>> cir) {

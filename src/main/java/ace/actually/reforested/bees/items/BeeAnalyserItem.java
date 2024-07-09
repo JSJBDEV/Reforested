@@ -1,5 +1,6 @@
 package ace.actually.reforested.bees.items;
 
+import ace.actually.reforested.bees.IReforestedBee;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -16,6 +17,10 @@ public class BeeAnalyserItem extends Item {
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
 
+        if(!user.getEntityWorld().isClient && entity instanceof IReforestedBee bee)
+        {
+            user.sendMessage(Text.of(bee.reforested$getBeeType()));
+        }
         return super.useOnEntity(stack, user, entity, hand);
     }
 }

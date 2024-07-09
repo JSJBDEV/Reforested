@@ -11,6 +11,9 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * We use this class to register new boat types at runtime.
+ */
 public class BoatHelper {
 
     public static List<String> BOATS_TYPES = new ArrayList<>();

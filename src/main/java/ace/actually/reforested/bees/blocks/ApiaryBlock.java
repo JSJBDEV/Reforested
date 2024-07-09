@@ -30,6 +30,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * Right now this could be a mixin
+ * the apiary is a more useful version of the vanilla beehive, it can deal with custom bee products.
+ */
 public class ApiaryBlock extends BeehiveBlock {
     public ApiaryBlock(Settings settings) {
         super(settings);

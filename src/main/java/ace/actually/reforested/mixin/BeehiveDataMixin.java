@@ -5,15 +5,19 @@ import ace.actually.reforested.bees.IReforestedBee;
 import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * Why we need this mixin:
+ * - we want some bees to spend more time in the hive than others
+ * - a kinda bee "efficiency"
+ * - we need to modify the return value of "of()" to do this.
+ */
 @Mixin(BeehiveBlockEntity.BeeData.class)
 public abstract class BeehiveDataMixin {
 

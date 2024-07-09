@@ -93,7 +93,7 @@ public class CentrifugeScreenHandler extends ScreenHandler {
         return newStack;
     }
 
-    public class OutputSlot extends Slot
+    public static class OutputSlot extends Slot
     {
 
         public OutputSlot(Inventory inventory, int index, int x, int y) {

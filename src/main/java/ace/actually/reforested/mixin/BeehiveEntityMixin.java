@@ -4,27 +4,40 @@ package ace.actually.reforested.mixin;
 import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.bees.IReforestedBee;
 import ace.actually.reforested.bees.IReforestedBeehive;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FireBlock;
 import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Why we need this mixin:
+ * - we want to know what type of comb this hive produces without being too intrusive
+ * - we want to check to see if we can simulate bee mutation/breeding
+ * - we do both of these things by writing additional data to the beehive block entity
+ */
 @Mixin(BeehiveBlockEntity.class)
 public abstract class BeehiveEntityMixin implements IReforestedBeehive {
 
@@ -82,6 +95,24 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
 
         }
     }
+
+    @Inject(method = "releaseBee", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/random/Random;nextInt(I)I", shift = At.Shift.AFTER))
+    private static void injected(World world, BlockPos pos, BlockState state, BeehiveBlockEntity.BeeData bee, @Nullable List<Entity> entities, BeehiveBlockEntity.BeeState beeState, @Nullable BlockPos flowerPos, CallbackInfoReturnable<Boolean> cir, @Local(name="i") LocalIntRef localRef) {
+
+        String btype = bee.entityData().copyNbt().getString("bee_type");
+        if(world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT) && !BeeLookups.BEE_LIKES_HUMIDITY_MAP.get(btype))
+        {
+            localRef.set(localRef.get()-1);
+        }
+        float preferred = BeeLookups.BEE_PREF_TEMP_MAP.get(btype);
+        if(world.getBiome(pos).value().getTemperature()>preferred+0.2 || world.getBiome(pos).value().getTemperature()<preferred-0.2)
+        {
+            localRef.set(localRef.get()-1);
+        }
+
+    }
+
+
     @Inject(at = @At("TAIL"), method = "serverTick")
     private static void tick(World world, BlockPos pos, BlockState state, BeehiveBlockEntity blockEntity, CallbackInfo ci) {
         if(blockEntity.getBeeCount()>1 && blockEntity instanceof IReforestedBeehive beehive)

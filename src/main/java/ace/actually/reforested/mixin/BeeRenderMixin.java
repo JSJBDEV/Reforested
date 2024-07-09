@@ -1,29 +1,23 @@
 package ace.actually.reforested.mixin;
 
-import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.bees.IReforestedBee;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.entity.BeeEntityRenderer;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URI;
-import java.util.HashMap;
 
+/**
+ * Why we need this mixin:
+ * - we want our new bee types to look different
+ */
 @Mixin(BeeEntityRenderer.class)
 public class BeeRenderMixin {
-    public BeeRenderMixin() throws IOException {
+    public BeeRenderMixin() {
     }
 
     @Inject(at = @At("HEAD"), method = "getTexture(Lnet/minecraft/entity/passive/BeeEntity;)Lnet/minecraft/util/Identifier;", cancellable = true)
