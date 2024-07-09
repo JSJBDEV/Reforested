@@ -1,6 +1,9 @@
 package ace.actually.reforested;
 
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
+import ace.actually.reforested.bees.blocks.CentrifugeBlock;
+import ace.actually.reforested.bees.blocks.CentrifugeBlockEntity;
+import ace.actually.reforested.bees.blocks.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import com.google.common.collect.ImmutableSet;
@@ -8,15 +11,21 @@ import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.screenhandler.v1.FabricScreenHandlerFactory;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -70,10 +79,11 @@ public class Reforested implements ModInitializer {
 	}
 
 	public static final ApiaryBlock APIARY_BLOCK = new ApiaryBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));
+	public static final CentrifugeBlock CENTRIFUGE_BLOCK = new CentrifugeBlock(AbstractBlock.Settings.create());
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
-
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","centrifuge"),CENTRIFUGE_BLOCK);
 
 	}
 
@@ -86,12 +96,26 @@ public class Reforested implements ModInitializer {
 	}
 
 
+	public static BlockEntityType<CentrifugeBlockEntity> CENTRIFUGE_BLOCK_ENTITY = Registry.register(
+			Registries.BLOCK_ENTITY_TYPE,
+			Identifier.of("lias", "boss_summon_block_entity"),
+			FabricBlockEntityTypeBuilder.create(CentrifugeBlockEntity::new, CENTRIFUGE_BLOCK).build()
+	);
+
+
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());
+	public static final HoneycombItem FIBROUS_HONEYCOMB = new HoneycombItem(new Item.Settings());
 	private void registerOtherItems()
 	{
-
+		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_honeycomb"),FIBROUS_HONEYCOMB));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
+	}
+
+	public static ExtendedScreenHandlerType<CentrifugeScreenHandler,CentrifugeBlockEntity.ProgressData> CENTRIFUGE_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(CentrifugeScreenHandler::new,CentrifugeBlockEntity.ProgressData.PACKET_CODEC);
+	static
+	{
+		CENTRIFUGE_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","centrifuge_screen_handler"),CENTRIFUGE_SCREEN_HANDLER);
 	}
 
 

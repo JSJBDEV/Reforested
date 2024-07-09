@@ -1,5 +1,6 @@
 package ace.actually.reforested.bees.blocks;
 
+import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.bees.IReforestedBeehive;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.BlockState;
@@ -45,21 +46,28 @@ public class ApiaryBlock extends BeehiveBlock {
                 if (stack.isOf(Items.SHEARS))
                 {
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                    dropHoneycomb(world, pos);
+                    float d = BeeLookups.BEE_PRODUCTIVITY_MAP.get(reforestedBeehive.reforested$getQueenBeeType());
+                    int total = (int) d;
+                    if(world.random.nextFloat()<(d-Math.floor(d)))
+                    {
+                        total++;
+                    }
+                    dropStack(world, pos, new ItemStack(BeeLookups.BEE_ITEM_MAP.get(reforestedBeehive.reforested$getQueenBeeType())[0], total));
                     stack.damage(1, player, LivingEntity.getSlotForHand(hand));
                     bl = true;
                     world.emitGameEvent(player, GameEvent.SHEAR, pos);
                 }
                 else if (stack.isOf(Items.GLASS_BOTTLE))
                 {
-                    if(reforestedBeehive.reforested$getQueenBeeType().contains("sticky"))
+                    if(BeeLookups.BEE_ITEM_MAP.get(reforestedBeehive.reforested$getQueenBeeType()).length>1)
                     {
+                        Item honeyMaybe = BeeLookups.BEE_ITEM_MAP.get(reforestedBeehive.reforested$getQueenBeeType())[1];
                         stack.decrement(1);
                         world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         if (stack.isEmpty()) {
-                            player.setStackInHand(hand, new ItemStack(Items.HONEY_BOTTLE));
-                        } else if (!player.getInventory().insertStack(new ItemStack(Items.HONEY_BOTTLE))) {
-                            player.dropItem(new ItemStack(Items.HONEY_BOTTLE), false);
+                            player.setStackInHand(hand, new ItemStack(honeyMaybe));
+                        } else if (!player.getInventory().insertStack(new ItemStack(honeyMaybe))) {
+                            player.dropItem(new ItemStack(honeyMaybe), false);
                         }
 
                         bl = true;

@@ -30,7 +30,10 @@ public class BeeRenderMixin {
     private void init(BeeEntity beeEntity, CallbackInfoReturnable<Identifier> cir) throws IOException {
         if(beeEntity instanceof IReforestedBee bee && bee.reforested$getBeeType()!=null && !bee.reforested$getBeeType().isEmpty() && !bee.reforested$getBeeType().contains("honey"))
         {
-            cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/"+bee.reforested$getBeeType()+"_bee.png"));
+            if(!bee.reforested$getBeeType().equals("honey"))
+            {
+                cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/"+bee.reforested$getBeeType()+"_bee.png"));
+            }
         }
     }
 

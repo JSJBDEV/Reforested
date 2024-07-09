@@ -21,7 +21,7 @@
 		],
 		"fabric-datagen": [
 			"ace.actually.reforested.ReforestedDataGenerator"
-		]
+		],"client": ["ace.actually.reforested.ClientInit"]
 	},
 	"mixins": [
 		"reforested.mixins.json"
