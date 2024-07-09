@@ -21,7 +21,13 @@
 		],
 		"fabric-datagen": [
 			"ace.actually.reforested.ReforestedDataGenerator"
-		],"client": ["ace.actually.reforested.ClientInit"]
+		],
+		"client": ["ace.actually.reforested.ClientInit"],
+		"mm:early_risers": [
+			{
+				"value": "ace.actually.reforested.RisingEarly"
+			}
+		]
 	},
 	"mixins": [
 		"reforested.mixins.json"

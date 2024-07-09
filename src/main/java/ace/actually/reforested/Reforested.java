@@ -6,6 +6,7 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlockEntity;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeRecipes;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
+import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import com.google.common.collect.ImmutableSet;
 import net.fabricmc.api.ModInitializer;
@@ -16,6 +17,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -94,19 +96,23 @@ public class Reforested implements ModInitializer {
 
 	public static BlockEntityType<CentrifugeBlockEntity> CENTRIFUGE_BLOCK_ENTITY = Registry.register(
 			Registries.BLOCK_ENTITY_TYPE,
-			Identifier.of("lias", "boss_summon_block_entity"),
+			Identifier.of("reforested", "centrifuge_block_entity"),
 			FabricBlockEntityTypeBuilder.create(CentrifugeBlockEntity::new, CENTRIFUGE_BLOCK).build()
 	);
 
 
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());
-	public static final HoneycombItem FIBROUS_HONEYCOMB = new HoneycombItem(new Item.Settings());
+	public static final HoneycombItem FIBROUS_COMB = new HoneycombItem(new Item.Settings());
 	public static final Item PROPOLIS = new Item(new Item.Settings());
+
+
 	private void registerOtherItems()
 	{
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_honeycomb"),FIBROUS_HONEYCOMB));
+		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_comb"), FIBROUS_COMB));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
+
+		BoatHelper.registerBoatItems();
 
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 	}

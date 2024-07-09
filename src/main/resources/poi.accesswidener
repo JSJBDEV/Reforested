@@ -2,3 +2,5 @@ accessWidener   v2  named
 accessible field net/minecraft/world/poi/PointOfInterestTypes POI_STATES_TO_TYPE Ljava/util/Map;
 mutable field net/minecraft/world/poi/PointOfInterestTypes POI_STATES_TO_TYPE Ljava/util/Map;
 accessible field net/minecraft/block/entity/BeehiveBlockEntity IRRELEVANT_BEE_NBT_KEYS Ljava/util/List;
+accessible field net/minecraft/block/entity/BeehiveBlockEntity bees Ljava/util/List;
+accessible class net/minecraft/block/entity/BeehiveBlockEntity$Bee

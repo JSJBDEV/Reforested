@@ -25,6 +25,9 @@ public class RLanguageProvider extends FabricLanguageProvider {
                 translationBuilder.add(block,t.get(block));
             }
             translationBuilder.add("itemgroup.reforested","Reforested");
+            translationBuilder.add(Reforested.CENTRIFUGE_BLOCK,"Centrifuge");
+            translationBuilder.add(Reforested.PROPOLIS,"Propolis");
+            translationBuilder.add(Reforested.FIBROUS_COMB,"Fibrous Comb");
         }
     }
 }

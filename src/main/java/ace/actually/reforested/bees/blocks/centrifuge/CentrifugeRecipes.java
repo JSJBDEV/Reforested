@@ -12,9 +12,9 @@ public class CentrifugeRecipes {
     public static void registerRecipes()
     {
         RECIPES.put(Items.HONEYCOMB,new ChancePair[]{new ChancePair(Items.SUGAR,0.4f),new ChancePair(Reforested.PROPOLIS,0.5f)});
+        RECIPES.put(Reforested.FIBROUS_COMB,new ChancePair[]{new ChancePair(Items.STRING,0.9f),new ChancePair(Items.STRING,0.5f),new ChancePair(Reforested.PROPOLIS,0.3f)});
     }
 
 
-    public record ChancePair(Item item, float chance) {
-    }
+    public record ChancePair(Item item, float chance) {}
 }

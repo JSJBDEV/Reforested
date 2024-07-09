@@ -8,5 +8,6 @@ public class ClientInit implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         HandledScreens.register(Reforested.CENTRIFUGE_SCREEN_HANDLER, CentrifugeScreen::new);
+
     }
 }

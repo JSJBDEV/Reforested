@@ -1,6 +1,7 @@
 package ace.actually.reforested.trees.blocks;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.trees.BoatHelper;
 import net.minecraft.block.*;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
@@ -63,6 +64,7 @@ public class WoodBlockBuilder {
     {
         this.woodName=name;
 
+
         LOG = registerWithItem( Identifier.of("reforested",woodName+"_log"),
                 Blocks.createLogBlock(topColor,sideColor,woodSoundGroup));
         STRIPPED_LOG =registerWithItem( Identifier.of("reforested","stripped_"+woodName+"_log"),
@@ -109,6 +111,7 @@ public class WoodBlockBuilder {
 
 
 
+
         FAMILY = BlockFamilies.register(PLANKS)
                 .button(BUTTON)
                 .fence(FENCE)
@@ -123,6 +126,7 @@ public class WoodBlockBuilder {
                 .unlockCriterionName("has_planks")
                 .build();
 
+        BoatHelper.BOATS_TYPES.add(name);
     }
 
 
