@@ -1,9 +1,10 @@
 package ace.actually.reforested;
 
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
-import ace.actually.reforested.bees.blocks.CentrifugeBlock;
-import ace.actually.reforested.bees.blocks.CentrifugeBlockEntity;
-import ace.actually.reforested.bees.blocks.CentrifugeScreenHandler;
+import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlock;
+import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlockEntity;
+import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeRecipes;
+import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import com.google.common.collect.ImmutableSet;
@@ -13,19 +14,14 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
-import net.fabricmc.fabric.api.screenhandler.v1.FabricScreenHandlerFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -70,7 +66,7 @@ public class Reforested implements ModInitializer {
 		registerOtherItems();
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tab"),TAB);
 		registerOtherThings();
-
+		CentrifugeRecipes.registerRecipes();
 		ITEMS.forEach(item->
 		{
 			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(TAB).get()).register(a->a.add(item));
@@ -105,10 +101,13 @@ public class Reforested implements ModInitializer {
 
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());
 	public static final HoneycombItem FIBROUS_HONEYCOMB = new HoneycombItem(new Item.Settings());
+	public static final Item PROPOLIS = new Item(new Item.Settings());
 	private void registerOtherItems()
 	{
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_honeycomb"),FIBROUS_HONEYCOMB));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
+		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
+
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 	}
 

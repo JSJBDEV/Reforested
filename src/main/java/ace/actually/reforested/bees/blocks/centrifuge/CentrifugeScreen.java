@@ -1,10 +1,8 @@
-package ace.actually.reforested.bees.blocks;
+package ace.actually.reforested.bees.blocks.centrifuge;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
@@ -31,7 +29,7 @@ public class CentrifugeScreen extends HandledScreen<CentrifugeScreenHandler> {
         NbtCompound v = handler.getLabel();
         BlockPos pos = new BlockPos(v.getInt("x"),v.getInt("y"),v.getInt("z"));
         CentrifugeBlockEntity be = (CentrifugeBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos);
-        context.drawText(textRenderer,be.getTicksToComplete()+"",0,0, Colors.WHITE,true);
+        context.drawText(textRenderer,be.getTicksToComplete()+"",(width/2)-25,100, Colors.WHITE,true);
     }
 
     @Override

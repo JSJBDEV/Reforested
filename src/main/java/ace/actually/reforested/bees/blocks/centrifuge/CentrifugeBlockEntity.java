@@ -1,6 +1,8 @@
-package ace.actually.reforested.bees.blocks;
+package ace.actually.reforested.bees.blocks.centrifuge;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.bees.blocks.ApiaryBlock;
+import ace.actually.reforested.bees.blocks.GenericInventory;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -16,7 +18,6 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -75,17 +76,59 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, CentrifugeBlockEntity be) {
-        if(!be.inventory.get(9).isEmpty() && be.inventory.get(9).isOf(Items.HONEYCOMB))
+        if(!be.inventory.get(9).isEmpty() && CentrifugeRecipes.RECIPES.containsKey(be.inventory.get(9).getItem()) && !world.isClient)
         {
             if(be.getTicksToComplete()==-1)
             {
-                be.setTicksToComplete(1000);
+                be.setTicksToComplete(100);
                 System.out.println("started");
             }
 
             if(be.getTicksToComplete()==0)
             {
                 System.out.println("finished");
+                CentrifugeRecipes.ChancePair[] pairs = CentrifugeRecipes.RECIPES.get(be.inventory.get(9).getItem());
+                be.inventory.get(9).decrement(1);
+
+                boolean c = false;
+
+                System.out.println(pairs.length);
+
+                    for(CentrifugeRecipes.ChancePair pair: pairs)
+                    {
+                        for (int i = 0; i < 9; i++)
+                        {
+                            if(be.inventory.get(i).isEmpty() || (be.inventory.get(i).isOf(pair.item()) && be.inventory.get(i).getCount()<be.inventory.get(i).getMaxCount()))
+                            {
+                                if(world.random.nextFloat()<pair.chance())
+                                {
+                                    if(be.inventory.get(i).isOf(pair.item()))
+                                    {
+                                        be.inventory.get(i).increment(1);
+                                    }
+                                    else
+                                    {
+                                        be.inventory.set(i,new ItemStack(pair.item()));
+                                    }
+                                    System.out.println(pair.item());
+                                }
+
+                                break;
+                            }
+                        }
+
+                    }
+
+                if(be.inventory.get(9).getCount()>0)
+                {
+                    be.setTicksToComplete(100);
+                }
+                else
+                {
+                    be.setTicksToComplete(-1);
+                }
+
+
             }
             else if(be.getTicksToComplete()>0)
             {

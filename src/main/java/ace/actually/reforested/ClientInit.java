@@ -1,7 +1,6 @@
 package ace.actually.reforested;
 
-import ace.actually.reforested.bees.blocks.CentrifugeScreen;
-import ace.actually.reforested.bees.blocks.CentrifugeScreenHandler;
+import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 

@@ -1,7 +1,6 @@
-package ace.actually.reforested.bees.blocks;
+package ace.actually.reforested.bees.blocks.centrifuge;
 
 import ace.actually.reforested.Reforested;
-import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -9,11 +8,7 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 
 public class CentrifugeScreenHandler extends ScreenHandler {
 
@@ -47,7 +42,7 @@ public class CentrifugeScreenHandler extends ScreenHandler {
         //Our inventory
         for (m = 0; m < 3; ++m) {
             for (l = 0; l < 3; ++l) {
-                this.addSlot(new Slot(inventory, l + m * 3, 98 + l * 18, 17 + m * 18));
+                this.addSlot(new OutputSlot(inventory, l + m * 3, 98 + l * 18, 17 + m * 18));
             }
         }
         this.addSlot(new Slot(inventory, 9, 26, 35));
@@ -96,5 +91,18 @@ public class CentrifugeScreenHandler extends ScreenHandler {
         }
 
         return newStack;
+    }
+
+    public class OutputSlot extends Slot
+    {
+
+        public OutputSlot(Inventory inventory, int index, int x, int y) {
+            super(inventory, index, x, y);
+        }
+
+        @Override
+        public boolean canInsert(ItemStack stack) {
+            return false;
+        }
     }
 }
