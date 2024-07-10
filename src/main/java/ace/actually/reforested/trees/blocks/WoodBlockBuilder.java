@@ -1,8 +1,6 @@
 package ace.actually.reforested.trees.blocks;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.datagen.RConfiguredFeatures;
-import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.signs.ModdedHangingSign;
 import ace.actually.reforested.trees.blocks.signs.ModdedHangingWallSign;
 import ace.actually.reforested.trees.blocks.signs.ModdedSign;
@@ -13,6 +11,7 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.*;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
@@ -24,7 +23,6 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +40,9 @@ import static ace.actually.reforested.datagen.RRecipeProvider.has;
  * - register a treeGrower so the sapling can grow into a tree
  * - generate textures using 2 sets of rgb values.
  * - register boat types (using the power of jank)
- *If you want to use this class then use RisingEarly.PROMISED_WOOD_TYPES.add() to do so.
+ * If you want to use this class then use RisingEarly.PROMISED_WOOD_TYPES.add() to do so.
+ * make sure that you use this method in a static context (see the main Reforested file)
+ * als see the note in PromisedWoodType for context on why we have to do it this way.
  */
 public class WoodBlockBuilder {
     public String woodName;
@@ -74,8 +74,10 @@ public class WoodBlockBuilder {
     public Block WALL_HANGING_SIGN;
 
     public Item SIGN_ITEM;
-
     public Item HANGING_SIGN_ITEM;
+
+    public Item BOAT;
+    public Item CHEST_BOAT;
 
     public TagKey<Item> LOGS_ITEMS_TAG;
     public TagKey<Block> LOGS_BLOCKS_TAG;
@@ -119,6 +121,12 @@ public class WoodBlockBuilder {
 
         PLANKS = registerWithItem( Identifier.of("reforested",woodName+"_planks"),
                 new Block(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)));
+
+        BOAT = Registry.register(Registries.ITEM,Identifier.of("reforested",woodName+"_boat"),
+                new BoatItem(false, BoatEntity.Type.getType(woodName),new Item.Settings()));
+
+        CHEST_BOAT = Registry.register(Registries.ITEM,Identifier.of("reforested",woodName+"_chest_boat"),
+                new BoatItem(true, BoatEntity.Type.getType(woodName),new Item.Settings()));
 
         AS_CONFIGURED_FEATURE = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Identifier.of("reforested",woodName));
         AS_PLACED_FEATURE = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("reforested",woodName));
@@ -180,6 +188,8 @@ public class WoodBlockBuilder {
 
         Reforested.ITEMS.add(SIGN_ITEM);
         Reforested.ITEMS.add(HANGING_SIGN_ITEM);
+        Reforested.ITEMS.add(BOAT);
+        Reforested.ITEMS.add(CHEST_BOAT);
     }
 
     public BlockFamily createFamily()

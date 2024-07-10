@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Why we need this mixin:
  * - we want to add new beehives that do different things
  * - we can only add new beehives by telling the beehive block entity that it also likes our custom blocks
- * - this is extendable using the ADD_BEEHIVE list.
+ * - this is extendable using the ADD_BEEHIVE list in the main class.
  */
 @Mixin(BlockEntityType.class)
 public class BlockEntityTypeMixin {

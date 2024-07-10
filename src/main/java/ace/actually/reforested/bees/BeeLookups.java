@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Do ya like jazz?
+ * this class is responsible for all bee related things
+ * to add a new bee, simply use addBee statically
+ * to add a new breeding pair, use addBreedingCombination
+ * it really is that simple.
+ * NOTE: when adding a new bee you should put it's texture in resources/assets/reforested/textures/entity/bee
+ *
+ */
 public class BeeLookups {
     public static List<String> BEE_TYPES = new ArrayList<>();
     public static HashMap<String,String> BEE_FAMILY_MAP = new HashMap<>();

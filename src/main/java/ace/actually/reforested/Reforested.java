@@ -6,8 +6,6 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlockEntity;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeRecipes;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
-import ace.actually.reforested.datagen.RVibeBasedTexturer;
-import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.PromisedWoodType;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
@@ -21,7 +19,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -93,11 +90,6 @@ public class Reforested implements ModInitializer {
 
 	}
 
-	static
-	{
-		BoatHelper.BOATS_TYPES.add("larch");
-	}
-
 	public static List<Block> ADD_BEEHIVE = new ArrayList<>();
 	static
 	{
@@ -153,7 +145,6 @@ public class Reforested implements ModInitializer {
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
 
-		BoatHelper.registerBoatItems();
 
 		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 	}

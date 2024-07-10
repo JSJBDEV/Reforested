@@ -6,6 +6,12 @@ import net.minecraft.item.Items;
 
 import java.util.HashMap;
 
+/**
+ * Here you can add a centrifuge recipe
+ * just use CentrifugeRecipes.RECIPES.put();
+ * The centrifuge doesn't actually check recipes until you put an item in
+ * and even then it's a HashMap, so it's fast at determining if it exists or not
+ */
 public class CentrifugeRecipes {
     public static HashMap<Item, ChancePair[]> RECIPES = new HashMap<>();
 

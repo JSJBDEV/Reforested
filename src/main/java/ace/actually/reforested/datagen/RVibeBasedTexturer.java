@@ -25,7 +25,7 @@ public class RVibeBasedTexturer {
 
 
     /**
-     * leaving this in, because its far easier to test wood generation this way
+     * leaving this in, because it's far easier to test wood generation this way
      * @param args you know what these do. I don't
      */
     public static void main(String[] args)

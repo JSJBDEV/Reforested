@@ -1,6 +1,7 @@
 package ace.actually.reforested.mixin;
 
-import ace.actually.reforested.trees.BoatHelper;
+import ace.actually.reforested.Reforested;
+import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -20,10 +21,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BoatEntityMixin {
     @Shadow public abstract BoatEntity.Type getVariant();
 
+
     @Inject(at = @At("HEAD"), method = "asItem", cancellable = true)
     private void dropCorrectBoat(CallbackInfoReturnable<Item> cir) {
-        for(String boat: BoatHelper.BOATS_TYPES)
+        for(WoodBlockBuilder builder: Reforested.WOOD_BLOCKS)
         {
+            String boat = builder.woodName;
             if(getVariant()== BoatEntity.Type.getType(boat))
             {
                 cir.setReturnValue(Registries.ITEM.get(Identifier.of("reforested",boat+"_boat")));

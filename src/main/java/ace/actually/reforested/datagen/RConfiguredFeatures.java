@@ -23,6 +23,11 @@ public class RConfiguredFeatures {
 
     }
 
+    /**
+     * the idea of this method is to give the builder options for what the tree looks like
+     * @param builder the wood type
+     * @return the feature built with the correct names, or null
+     */
     public static ConfiguredFeature like(WoodBlockBuilder builder)
     {
         switch (builder.LIKE_TREE)
