@@ -6,6 +6,7 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlockEntity;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeRecipes;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
+import ace.actually.reforested.datagen.RVibeBasedTexturer;
 import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
@@ -63,7 +64,9 @@ public class Reforested implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		WOOD_BLOCKS.add(new WoodBlockBuilder("larch"));
+
+
+		WOOD_BLOCKS.add(new WoodBlockBuilder("larch",new int[]{-2,-44,-117},new int[]{55,50,-200},"spruce"));
 		registerBlockEntities();
 		registerOtherBlocks();
 		registerOtherItems();
@@ -75,6 +78,7 @@ public class Reforested implements ModInitializer {
 			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(TAB).get()).register(a->a.add(item));
 		});
 		LOGGER.info("Hello Fabric world!");
+
 	}
 
 	public static final ApiaryBlock APIARY_BLOCK = new ApiaryBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));

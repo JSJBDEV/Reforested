@@ -1,10 +1,12 @@
 package ace.actually.reforested.bees.items;
 
 import ace.actually.reforested.bees.IReforestedBee;
+import ace.actually.reforested.datagen.RVibeBasedTexturer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -23,5 +25,11 @@ public class BeeAnalyserItem extends Item {
 
         }
         return super.useOnEntity(stack, user, entity, hand);
+    }
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        RVibeBasedTexturer.makeTexture(RVibeBasedTexturer.BLOCK_PATH+"larch_planks.png",RVibeBasedTexturer.BLOCK_PATH+"wenge_planks.png",0,5,0);
+        return super.useOnBlock(context);
     }
 }

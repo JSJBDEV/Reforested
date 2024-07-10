@@ -1,6 +1,7 @@
 package ace.actually.reforested.trees.blocks;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.datagen.RConfiguredFeatures;
 import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.signs.ModdedHangingSign;
 import ace.actually.reforested.trees.blocks.signs.ModdedHangingWallSign;
@@ -16,12 +17,18 @@ import net.minecraft.item.*;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static ace.actually.reforested.datagen.RRecipeProvider.has;
 
@@ -29,7 +36,6 @@ public class WoodBlockBuilder {
     public String woodName;
     public MapColor topColor;
     public MapColor sideColor;
-    public SaplingGenerator saplingGenerator = SaplingGenerator.OAK;
     public BlockSoundGroup woodSoundGroup = BlockSoundGroup.WOOD;
     public BlockSoundGroup leavesSoundGroup = BlockSoundGroup.GRASS;
     public BlockSetType blockSetType = BlockSetType.OAK;
@@ -62,10 +68,21 @@ public class WoodBlockBuilder {
     public TagKey<Item> LOGS_ITEMS_TAG;
     public TagKey<Block> LOGS_BLOCKS_TAG;
 
+    public int[] PLANKS_COLOUR;
+    public int[] LEAVES_COLOUR;
 
+    public SaplingGenerator saplingGenerator;
 
-    public WoodBlockBuilder(String name)
+    public RegistryKey<ConfiguredFeature<?,?>> AS_CONFIGURED_FEATURE;
+    public RegistryKey<PlacedFeature> AS_PLACED_FEATURE;
+    public String LIKE_TREE;
+
+    public WoodBlockBuilder(String name,int[] planksColour, int[] leavesColour,String likeTree)
     {
+        LIKE_TREE=likeTree;
+        PLANKS_COLOUR = planksColour;
+        LEAVES_COLOUR = leavesColour;
+
         this.woodName=name;
         LOGS_ITEMS_TAG = TagKey.of(Registries.ITEM.getKey(), Identifier.of("reforested",woodName+"_logs"));
         LOGS_BLOCKS_TAG = TagKey.of(Registries.BLOCK.getKey(), Identifier.of("reforested",woodName+"_logs"));
@@ -90,6 +107,16 @@ public class WoodBlockBuilder {
 
         PLANKS = registerWithItem( Identifier.of("reforested",woodName+"_planks"),
                 new Block(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)));
+
+        AS_CONFIGURED_FEATURE = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Identifier.of("reforested",woodName));
+        AS_PLACED_FEATURE = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("reforested",woodName));
+
+
+        saplingGenerator =new SaplingGenerator(
+                woodName,
+                Optional.empty(), // Mega Tree
+                Optional.of(AS_CONFIGURED_FEATURE), // Tree
+                Optional.empty()); // Tree With Flowers
 
         SAPLING = registerWithItem(Identifier.of("reforested",woodName+"_sapling"),
                 new SaplingBlock(saplingGenerator,AbstractBlock.Settings.copy(Blocks.OAK_SAPLING)));
