@@ -8,6 +8,8 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.trees.BoatHelper;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
+import ace.actually.reforested.trees.blocks.signs.be.ModdedSignBlockEntity;
 import com.google.common.collect.ImmutableSet;
 import net.fabricmc.api.ModInitializer;
 
@@ -52,10 +54,7 @@ public class Reforested implements ModInitializer {
 			.build();
 
 	public static final ArrayList<WoodBlockBuilder> WOOD_BLOCKS = new ArrayList<>();
-	static
-	{
-		WOOD_BLOCKS.add(new WoodBlockBuilder("larch"));
-	}
+
 
 
 
@@ -64,6 +63,8 @@ public class Reforested implements ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+		WOOD_BLOCKS.add(new WoodBlockBuilder("larch"));
+		registerBlockEntities();
 		registerOtherBlocks();
 		registerOtherItems();
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tab"),TAB);
@@ -99,6 +100,34 @@ public class Reforested implements ModInitializer {
 			Identifier.of("reforested", "centrifuge_block_entity"),
 			FabricBlockEntityTypeBuilder.create(CentrifugeBlockEntity::new, CENTRIFUGE_BLOCK).build()
 	);
+
+	public static BlockEntityType<ModdedSignBlockEntity> MODDED_SIGN_BLOCK_ENTITY;
+	public static BlockEntityType<ModdedHangingSignBlockEntity> MODDED_HANGING_SIGN_BLOCK_ENTITY;
+
+	private void registerBlockEntities()
+	{
+		List<Block> allWoodSigns = new ArrayList<>();
+		List<Block> allHangingWoodSigns = new ArrayList<>();
+		for(WoodBlockBuilder builder: WOOD_BLOCKS)
+		{
+			allWoodSigns.add(builder.SIGN);
+			allWoodSigns.add(builder.WALL_SIGN);
+			allHangingWoodSigns.add(builder.HANGING_SIGN);
+			allHangingWoodSigns.add(builder.WALL_HANGING_SIGN);
+		}
+
+		MODDED_SIGN_BLOCK_ENTITY = Registry.register(
+				Registries.BLOCK_ENTITY_TYPE,
+				Identifier.of("reforested", "sign_block_entity"),
+				BlockEntityType.Builder.create(ModdedSignBlockEntity::new, allWoodSigns.toArray(new Block[]{})).build());
+
+
+
+		MODDED_HANGING_SIGN_BLOCK_ENTITY = Registry.register(
+				Registries.BLOCK_ENTITY_TYPE,
+				Identifier.of("reforested", "hanging_sign_block_entity"),
+				BlockEntityType.Builder.create(ModdedHangingSignBlockEntity::new, allHangingWoodSigns.toArray(new Block[]{})).build());
+	}
 
 
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());

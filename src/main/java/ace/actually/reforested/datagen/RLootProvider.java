@@ -21,8 +21,12 @@ public class RLootProvider extends FabricBlockLootTableProvider {
     public void generate() {
         for(WoodBlockBuilder builder: Reforested.WOOD_BLOCKS)
         {
+            this.addDrop(builder.LOG,builder.LOG.asItem());
+            this.addDrop(builder.WOOD,builder.WOOD.asItem());
+            this.addDrop(builder.STRIPPED_LOG,builder.STRIPPED_LOG.asItem());
+            this.addDrop(builder.STRIPPED_WOOD,builder.STRIPPED_WOOD.asItem());
             this.addDrop(builder.PLANKS,builder.PLANKS.asItem());
-            this.addDrop(builder.SAPLINGS,builder.SAPLINGS.asItem());
+            this.addDrop(builder.SAPLING,builder.SAPLING.asItem());
             this.addDrop(builder.SIGN,builder.SIGN_ITEM);
             this.addDrop(builder.HANGING_SIGN,builder.HANGING_SIGN_ITEM);
             this.addDrop(builder.WALL_SIGN,builder.SIGN_ITEM);
@@ -33,6 +37,7 @@ public class RLootProvider extends FabricBlockLootTableProvider {
             this.addDrop(builder.TRAPDOOR,builder.TRAPDOOR.asItem());
             this.addDrop(builder.FENCE,builder.FENCE.asItem());
             this.addDrop(builder.FENCE_GATE,builder.FENCE_GATE.asItem());
+            this.addDrop(builder.STAIRS,builder.STAIRS.asItem());
 
             this.addDrop(builder.LEAVES,dropsWithShears(builder.LEAVES.asItem())
                     .pool(LootPool.builder()

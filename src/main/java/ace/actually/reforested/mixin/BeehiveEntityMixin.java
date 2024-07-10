@@ -1,6 +1,7 @@
 package ace.actually.reforested.mixin;
 
 
+import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.bees.IReforestedBee;
 import ace.actually.reforested.bees.IReforestedBeehive;
@@ -115,11 +116,11 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
 
     @Inject(at = @At("TAIL"), method = "serverTick")
     private static void tick(World world, BlockPos pos, BlockState state, BeehiveBlockEntity blockEntity, CallbackInfo ci) {
-        if(blockEntity.getBeeCount()>1 && blockEntity instanceof IReforestedBeehive beehive)
+        if(blockEntity.getBeeCount()>1 && blockEntity instanceof IReforestedBeehive beehive && state.isOf(Reforested.APIARY_BLOCK))
         {
             if(beehive.reforested$nextBreedingCheck()==-1)
             {
-                beehive.reforested$setNextBreedingCheck(world.getTime()+100); //5000
+                beehive.reforested$setNextBreedingCheck(world.getTime()+5000); //5000
                 System.out.println("started ticker!");
             }
             if(!blockEntity.isFullOfBees() && world.getTime()>beehive.reforested$nextBreedingCheck())
@@ -137,18 +138,20 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
                 {
                     if(typesInHive.contains(instance.type1()) && typesInHive.contains(instance.type2()))
                     {
-                        //world.random.nextFloat()<instance.chance()
-                        if(true)
+
+                        if(world.random.nextFloat()<instance.chance())
                         {
                             NbtCompound compound = new NbtCompound();
                             compound.putString("id", Registries.ENTITY_TYPE.getId(EntityType.BEE).toString());
                             compound.putString("bee_type",instance.mutation());
                             blockEntity.addBee(new BeehiveBlockEntity.BeeData(NbtComponent.of(compound),2400,2400));
+                            typesInHive.add(instance.mutation());
                         }
                         System.out.println("bee things!");
                         break;
                     }
                 }
+                beehive.reforested$setQueenBeeType(typesInHive.get(world.random.nextInt(typesInHive.size())));
                 beehive.reforested$setNextBreedingCheck(world.getTime()+5000);
             }
 

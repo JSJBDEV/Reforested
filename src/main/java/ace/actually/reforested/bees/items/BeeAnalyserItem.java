@@ -19,7 +19,8 @@ public class BeeAnalyserItem extends Item {
 
         if(!user.getEntityWorld().isClient && entity instanceof IReforestedBee bee)
         {
-            user.sendMessage(Text.of(bee.reforested$getBeeType()));
+            user.sendMessage(Text.translatable("text.reforested.typeof").append(" ").append(Text.translatable("bee.reforested."+bee.reforested$getBeeType()).append(Text.translatable("thing.reforested.bee"))));
+
         }
         return super.useOnEntity(stack, user, entity, hand);
     }

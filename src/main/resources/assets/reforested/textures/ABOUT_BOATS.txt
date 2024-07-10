@@ -1,0 +1,3 @@
+Hi There!
+if your looking for boat textures, there in the minecraft namespace.
+this is because we had to mess with the boat enum so its still technically a vanilla resource.

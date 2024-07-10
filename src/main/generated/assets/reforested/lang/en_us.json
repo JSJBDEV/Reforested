@@ -1,4 +1,15 @@
 {
+  "bee.reforested.affable": "Affable",
+  "bee.reforested.busy": "Busy",
+  "bee.reforested.candied": "Candied",
+  "bee.reforested.civil": "Civil",
+  "bee.reforested.employed": "Employed",
+  "bee.reforested.honey": "Honey",
+  "bee.reforested.lanky": "Lanky",
+  "bee.reforested.saccharine": "Saccharine",
+  "bee.reforested.stringy": "Stringy",
+  "block.reforested.apiary": "Apiary",
+  "block.reforested.centrifuge": "Centrifuge",
   "block.reforested.larch_button": "Larch Button",
   "block.reforested.larch_door": "Larch Door",
   "block.reforested.larch_fence": "Larch Fence",
@@ -14,5 +25,11 @@
   "block.reforested.larch_trapdoor": "Larch Trapdoor",
   "block.reforested.larch_wood": "Larch Wood",
   "block.reforested.stripped_larch_log": "Stripped Larch Log",
-  "itemgroup.reforested": "Reforested"
+  "item.reforested.bee_analyser": "Bee Analyser",
+  "item.reforested.fibrous_comb": "Fibrous Comb",
+  "item.reforested.propolis": "Propolis",
+  "itemgroup.reforested": "Reforested",
+  "tag.item.reforested.larch_logs": "Larch Logs",
+  "text.reforested.typeof": "This is a ",
+  "thing.reforested.bee": "Bee"
 }

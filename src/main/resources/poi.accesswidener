@@ -4,3 +4,5 @@ mutable field net/minecraft/world/poi/PointOfInterestTypes POI_STATES_TO_TYPE Lj
 accessible field net/minecraft/block/entity/BeehiveBlockEntity IRRELEVANT_BEE_NBT_KEYS Ljava/util/List;
 accessible field net/minecraft/block/entity/BeehiveBlockEntity bees Ljava/util/List;
 accessible class net/minecraft/block/entity/BeehiveBlockEntity$Bee
+accessible method net/minecraft/block/WoodType register (Lnet/minecraft/block/WoodType;)Lnet/minecraft/block/WoodType;
+accessible method net/minecraft/block/BlockSetType register (Lnet/minecraft/block/BlockSetType;)Lnet/minecraft/block/BlockSetType;

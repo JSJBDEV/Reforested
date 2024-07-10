@@ -1,6 +1,7 @@
 package ace.actually.reforested.bees;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.datagen.RLanguageProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 

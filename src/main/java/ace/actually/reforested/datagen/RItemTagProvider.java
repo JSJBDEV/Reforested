@@ -22,23 +22,24 @@ public class RItemTagProvider extends FabricTagProvider.ItemTagProvider {
         for(WoodBlockBuilder builder: Reforested.WOOD_BLOCKS)
         {
             this.getTagBuilder(builder.LOGS_ITEMS_TAG)
-                    .add(Registries.BLOCK.getId(builder.LOG))
-                    .add(Registries.BLOCK.getId(builder.STRIPPED_LOG))
-                    .add(Registries.BLOCK.getId(builder.WOOD))
-                    .add(Registries.BLOCK.getId(builder.STRIPPED_WOOD));
+                    .add(Registries.ITEM.getId(builder.LOG.asItem()))
+                    .add(Registries.ITEM.getId(builder.STRIPPED_LOG.asItem()))
+                    .add(Registries.ITEM.getId(builder.WOOD.asItem()))
+                    .add(Registries.ITEM.getId(builder.STRIPPED_WOOD.asItem()));
 
-            this.getTagBuilder(ItemTags.WOODEN_FENCES).add(Registries.BLOCK.getId(builder.FENCE));
+            this.getTagBuilder(ItemTags.WOODEN_FENCES).add(Registries.ITEM.getId(builder.FENCE.asItem()));
             this.getTagBuilder(ItemTags.LOGS_THAT_BURN).addTag(builder.LOGS_ITEMS_TAG.id());
-            this.getTagBuilder(ItemTags.LEAVES).add(Registries.BLOCK.getId(builder.LEAVES));
-            this.getTagBuilder(ItemTags.PLANKS).add(Registries.BLOCK.getId(builder.PLANKS));
-            this.getTagBuilder(ItemTags.FENCE_GATES).add(Registries.BLOCK.getId(builder.FENCE_GATE));
-            this.getTagBuilder(ItemTags.WOODEN_BUTTONS).add(Registries.BLOCK.getId(builder.BUTTON));
-            this.getTagBuilder(ItemTags.WOODEN_DOORS).add(Registries.BLOCK.getId(builder.DOOR));
-            this.getTagBuilder(ItemTags.WOODEN_SLABS).add(Registries.BLOCK.getId(builder.SLAB));
-            this.getTagBuilder(ItemTags.WOODEN_STAIRS).add(Registries.BLOCK.getId(builder.STAIRS));
-            this.getTagBuilder(ItemTags.SIGNS).add(Registries.BLOCK.getId(builder.SIGN));
-            this.getTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(Registries.BLOCK.getId(builder.TRAPDOOR));
-            this.getTagBuilder(ItemTags.HANGING_SIGNS).add(Registries.BLOCK.getId(builder.HANGING_SIGN)).add(Registries.BLOCK.getId(builder.WALL_HANGING_SIGN));
+            this.getTagBuilder(ItemTags.LEAVES).add(Registries.ITEM.getId(builder.LEAVES.asItem()));
+            this.getTagBuilder(ItemTags.PLANKS).add(Registries.ITEM.getId(builder.PLANKS.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_PRESSURE_PLATES).add(Registries.ITEM.getId(builder.PRESSURE_PLATE.asItem()));
+            this.getTagBuilder(ItemTags.FENCE_GATES).add(Registries.ITEM.getId(builder.FENCE_GATE.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_BUTTONS).add(Registries.ITEM.getId(builder.BUTTON.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_DOORS).add(Registries.ITEM.getId(builder.DOOR.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_SLABS).add(Registries.ITEM.getId(builder.SLAB.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_STAIRS).add(Registries.ITEM.getId(builder.STAIRS.asItem()));
+            this.getTagBuilder(ItemTags.SIGNS).add(Registries.ITEM.getId(builder.SIGN_ITEM.asItem()));
+            this.getTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(Registries.ITEM.getId(builder.TRAPDOOR.asItem()));
+            this.getTagBuilder(ItemTags.HANGING_SIGNS).add(Registries.ITEM.getId(builder.HANGING_SIGN_ITEM));
 
         }
     }

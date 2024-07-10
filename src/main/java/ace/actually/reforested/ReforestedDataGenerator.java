@@ -11,8 +11,8 @@ public class ReforestedDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(RModelProvider::new);
 		pack.addProvider(RLootProvider::new);
 		pack.addProvider(RLanguageProvider::new);
+		pack.addProvider(RRecipeProvider::new);
 		pack.addProvider(RBlockTagProvider::new);
 		pack.addProvider(RItemTagProvider::new);
-		pack.addProvider(RRecipeProvider::new);
 	}
 }

@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -47,6 +48,16 @@ public class ApiaryBlock extends BeehiveBlock {
         if (i >= 5) {
             if(world.getBlockEntity(pos) instanceof IReforestedBeehive reforestedBeehive)
             {
+                String t = reforestedBeehive.reforested$getQueenBeeType();
+                if(!BeeLookups.BEE_LIKES_HUMIDITY_MAP.get(t) && world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT))
+                {
+                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+                }
+                if(world.getBiome(pos).value().getTemperature()>BeeLookups.BEE_PREF_TEMP_MAP.get(t)+0.2 || world.getBiome(pos).value().getTemperature()<BeeLookups.BEE_PREF_TEMP_MAP.get(t)-0.2)
+                {
+                    return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+                }
+
                 if (stack.isOf(Items.SHEARS))
                 {
                     world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.BLOCKS, 1.0F, 1.0F);
