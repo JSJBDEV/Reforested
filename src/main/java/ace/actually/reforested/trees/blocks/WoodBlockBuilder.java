@@ -32,6 +32,18 @@ import java.util.Optional;
 
 import static ace.actually.reforested.datagen.RRecipeProvider.has;
 
+/**
+ * TREES!
+ * want to add a new wood type to the game? it's a lot of effort.
+ * unless of course you use my handy dandy generator here (with big thanks to TechTastic)
+ * constructing a WoodBlockBuilder will:
+ * - register all the wood related blocks, their items, their base translations and their tags
+ * - register all the wood related models, the blocks, the items and the boats
+ * - register a treeGrower so the sapling can grow into a tree
+ * - generate textures using 2 sets of rgb values.
+ * - register boat types (using the power of jank)
+ *If you want to use this class then use RisingEarly.PROMISED_WOOD_TYPES.add() to do so.
+ */
 public class WoodBlockBuilder {
     public String woodName;
     public MapColor topColor;
@@ -168,13 +180,6 @@ public class WoodBlockBuilder {
 
         Reforested.ITEMS.add(SIGN_ITEM);
         Reforested.ITEMS.add(HANGING_SIGN_ITEM);
-
-        System.out.println(SIGN.getTranslationKey());
-        System.out.println(WALL_SIGN.getTranslationKey());
-        System.out.println(WALL_HANGING_SIGN.getTranslationKey());
-        System.out.println(HANGING_SIGN.getTranslationKey());
-
-        BoatHelper.BOATS_TYPES.add(name);
     }
 
     public BlockFamily createFamily()
@@ -303,7 +308,7 @@ public class WoodBlockBuilder {
 
     public Map<Block,String> produceBlockTranslations()
     {
-        String caps = woodName = woodName.substring(0, 1).toUpperCase() + woodName.substring(1);
+        String caps = woodName.substring(0, 1).toUpperCase() + woodName.substring(1);
 
         HashMap<Block,String> t = new HashMap<>();
         t.put(PLANKS,caps+" Planks");

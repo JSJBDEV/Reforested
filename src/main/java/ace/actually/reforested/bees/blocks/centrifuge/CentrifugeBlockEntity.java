@@ -76,6 +76,10 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, CentrifugeBlockEntity be) {
+        if(be.getTicksToComplete()!=-1 && be.inventory.get(9).isEmpty() && !world.isClient)
+        {
+            be.setTicksToComplete(-1);
+        }
         if(!be.inventory.get(9).isEmpty() && CentrifugeRecipes.RECIPES.containsKey(be.inventory.get(9).getItem()) && !world.isClient)
         {
             if(be.getTicksToComplete()==-1)

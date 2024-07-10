@@ -8,6 +8,7 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.datagen.RVibeBasedTexturer;
 import ace.actually.reforested.trees.BoatHelper;
+import ace.actually.reforested.trees.blocks.PromisedWoodType;
 import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedSignBlockEntity;
@@ -58,15 +59,17 @@ public class Reforested implements ModInitializer {
 
 
 
-
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
+		for(PromisedWoodType promisedWoodType: RisingEarly.PROMISED_WOOD_TYPES)
+		{
+			WOOD_BLOCKS.add(promisedWoodType.create());
+		}
 
-		WOOD_BLOCKS.add(new WoodBlockBuilder("larch",new int[]{-2,-44,-117},new int[]{55,50,-200},"spruce"));
 		registerBlockEntities();
 		registerOtherBlocks();
 		registerOtherItems();
@@ -88,6 +91,11 @@ public class Reforested implements ModInitializer {
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","centrifuge"),CENTRIFUGE_BLOCK);
 
+	}
+
+	static
+	{
+		BoatHelper.BOATS_TYPES.add("larch");
 	}
 
 	public static List<Block> ADD_BEEHIVE = new ArrayList<>();

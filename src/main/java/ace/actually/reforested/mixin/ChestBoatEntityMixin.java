@@ -1,10 +1,14 @@
 package ace.actually.reforested.mixin;
 
 import ace.actually.reforested.trees.BoatHelper;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.BoatEntity;
+import net.minecraft.entity.vehicle.ChestBoatEntity;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,15 +20,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * - boats use enums; we get around this using MM
  * - adding a new item to the enum does not update the entities drop tables
  */
-@Mixin(BoatEntity.class)
-public abstract class ChestBoatEntityMixin {
-    @Shadow public abstract BoatEntity.Type getVariant();
+@Mixin(ChestBoatEntity.class)
+public abstract class ChestBoatEntityMixin extends BoatEntity {
+
+
+    public ChestBoatEntityMixin(EntityType<? extends BoatEntity> entityType, World world) {
+        super(entityType, world);
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return Text.translatable("entity.reforested."+this.getVariant().getName()+"_chest_boat.name");
+    }
 
     @Inject(at = @At("HEAD"), method = "asItem", cancellable = true)
     private void dropCorrectBoat(CallbackInfoReturnable<Item> cir) {
         for(String boat: BoatHelper.BOATS_TYPES)
         {
-            if(getVariant()== BoatEntity.Type.getType(boat))
+            if(this.getVariant()== BoatEntity.Type.getType(boat))
             {
                 cir.setReturnValue(Registries.ITEM.get(Identifier.of("reforested",boat+"_chest_boat")));
 

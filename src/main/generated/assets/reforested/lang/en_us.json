@@ -25,11 +25,13 @@
   "block.reforested.larch_trapdoor": "Larch Trapdoor",
   "block.reforested.larch_wood": "Larch Wood",
   "block.reforested.stripped_larch_log": "Stripped Larch Log",
+  "entity.reforested.larch_chest_boat.name": "Larch Boat With Chest",
   "item.reforested.bee_analyser": "Bee Analyser",
   "item.reforested.fibrous_comb": "Fibrous Comb",
+  "item.reforested.larch_boat": "Larch Boat",
+  "item.reforested.larch_chest_boat": "Larch Chest Boat",
   "item.reforested.propolis": "Propolis",
   "itemgroup.reforested": "Reforested",
-  "tag.item.reforested.larch_logs": "Larch Logs",
   "text.reforested.typeof": "This is a ",
   "thing.reforested.bee": "Bee"
 }

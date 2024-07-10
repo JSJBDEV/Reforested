@@ -29,7 +29,11 @@ public class CentrifugeScreen extends HandledScreen<CentrifugeScreenHandler> {
         NbtCompound v = handler.getLabel();
         BlockPos pos = new BlockPos(v.getInt("x"),v.getInt("y"),v.getInt("z"));
         CentrifugeBlockEntity be = (CentrifugeBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos);
-        context.drawText(textRenderer,be.getTicksToComplete()+"",(width/2)-25,100, Colors.WHITE,true);
+        if(be.getTicksToComplete()!=-1)
+        {
+            context.drawText(textRenderer,be.getTicksToComplete()+"",(width/2)-25,100, Colors.WHITE,true);
+        }
+
     }
 
     @Override

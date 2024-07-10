@@ -6,6 +6,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Model;
+import net.minecraft.data.client.Models;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
+
+import java.sql.Ref;
 
 public class RModelProvider extends FabricModelProvider {
     public RModelProvider(FabricDataOutput output) {
@@ -24,6 +30,8 @@ public class RModelProvider extends FabricModelProvider {
             gen.registerHangingSign(builder.STRIPPED_LOG,builder.HANGING_SIGN,builder.WALL_HANGING_SIGN);
             gen.registerFlowerPotPlant(builder.SAPLING,builder.POTTED_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
 
+
+
         }
     }
 
@@ -31,5 +39,10 @@ public class RModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator gen) {
         //You would think Id have to generate item models for wood here
         //apparently not.
+        for(WoodBlockBuilder builder: Reforested.WOOD_BLOCKS)
+        {
+            gen.register(Registries.ITEM.get(Identifier.of("reforested",builder.woodName+"_boat")), Models.GENERATED);
+            gen.register(Registries.ITEM.get(Identifier.of("reforested",builder.woodName+"_chest_boat")), Models.GENERATED);
+        }
     }
 }

@@ -9,6 +9,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * For the uncreative
+ * This class allows for all wood/tree related textures to be generated at the same time as the models
+ *
+ * DEV NOTE: if your going to use this class make sure to change PATH_TO_MOD_INSTANCE!
+ * this class should only technically be used in runDatagen, hence the hardcoded values
+ */
 public class RVibeBasedTexturer {
 
     public static final String PATH_TO_MOD_INSTANCE = "D:\\Programming\\Fabric\\Reforested\\";
@@ -17,12 +24,19 @@ public class RVibeBasedTexturer {
     public static final String MC_PATH = "src\\main\\resources\\assets\\minecraft\\textures\\";
 
 
+    /**
+     * leaving this in, because its far easier to test wood generation this way
+     * @param args you know what these do. I don't
+     */
     public static void main(String[] args)
     {
         toyMake();
     }
 
-    public static void toyMake()
+    /**
+     * make a hypothetical larch wood type (but this method specifically doesnt really on anything existing mod side
+     */
+    private static void toyMake()
     {
         String name = "larch";
         int[] c = new int[]{-2,-44,-117};
@@ -79,6 +93,9 @@ public class RVibeBasedTexturer {
             makeTexture(ITEM_PATH+"base_sign.png",ITEM_PATH+builder.woodName+"_sign.png",c[0],c[1],c[2]);
             makeTexture(ITEM_PATH+"base_hanging_sign.png",ITEM_PATH+builder.woodName+"_hanging_sign.png",c[0],c[1],c[2]);
 
+            makeTexture(ITEM_PATH+"base_boat.png",ITEM_PATH+builder.woodName+"_boat.png",c[0],c[1],c[2]);
+            makeTexture(ITEM_PATH+"base_chest_boat.png",ITEM_PATH+builder.woodName+"_chest_boat.png",c[0],c[1],c[2]);
+
             makeTexture(MC_PATH+"entity\\boat\\base.png",MC_PATH+"entity\\boat\\"+builder.woodName+".png",c[0],c[1],c[2]);
             makeTexture(MC_PATH+"entity\\chest_boat\\base.png",MC_PATH+"entity\\chest_boat\\"+builder.woodName+".png",c[0],c[1],c[2]);
 
@@ -90,14 +107,20 @@ public class RVibeBasedTexturer {
 
     }
 
+    /**
+     * make a texture located at "to" using "base" and then adding rgb values to it.
+     * @param base a texture to work from (these are greyscale in my case)
+     * @param to the place to put the new texture
+     * @param addRed how much red to add to each pixel
+     * @param addGreen how much green to add to each pixel
+     * @param addBlue how much blue to add to each pixel
+     */
     public static void makeTexture(String base, String to, int addRed, int addGreen, int addBlue)
     {
         try {
             BufferedImage original = ImageIO.read(new File(PATH_TO_MOD_INSTANCE +base));
             BufferedImage image= new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
             image.getGraphics().drawImage(original, 0, 0, null);
-
-            Color b = new Color(image.getRGB(0,0),true);
 
             for (int i = 0; i < image.getWidth(); i++) {
                 for (int j = 0; j < image.getHeight(); j++) {
