@@ -6,13 +6,16 @@ import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeBlockEntity;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeRecipes;
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
-import ace.actually.reforested.trees.blocks.PromisedWoodType;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.tree_breeding.TreeBreedingRecipes;
+import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedSignBlockEntity;
 import com.google.common.collect.ImmutableSet;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -28,6 +31,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.poi.PointOfInterestType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +78,14 @@ public class Reforested implements ModInitializer {
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tab"),TAB);
 		registerOtherThings();
 		CentrifugeRecipes.registerRecipes();
+		TreeBreedingRecipes.registerRecipes();
+
+		BiomeModifications.create(Identifier.of("reforested","larch_trees")).add(ModificationPhase.ADDITIONS,
+				biomeSelectionContext -> biomeSelectionContext.getBiomeKey()== BiomeKeys.TAIGA,
+				biomeModificationContext -> biomeModificationContext.getGenerationSettings()
+						.addFeature(GenerationStep.Feature.LAKES,RegistryKey.of(RegistryKeys.PLACED_FEATURE,Identifier.of("reforested","larch"))));
+
+
 		ITEMS.forEach(item->
 		{
 			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(TAB).get()).register(a->a.add(item));
@@ -179,6 +192,20 @@ public class Reforested implements ModInitializer {
 				throw Util.throwOrPause(new IllegalStateException(String.format(Locale.ROOT, "%s is defined in more than one PoI type", state)));
 			}
 		});
+	}
+
+	public static String toTranslation(String name)
+	{
+		StringBuilder builder = new StringBuilder();
+		String[] parts = name.split("_");
+		for(String part: parts)
+		{
+			builder.append(part.substring(0, 1).toUpperCase()).append(part.substring(1)).append(" ");
+		}
+
+
+		String v = builder.toString();
+		return v.substring(0,v.length()-1);
 	}
 
 

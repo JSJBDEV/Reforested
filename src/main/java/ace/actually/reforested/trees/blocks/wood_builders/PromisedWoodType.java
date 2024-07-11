@@ -1,4 +1,6 @@
-package ace.actually.reforested.trees.blocks;
+package ace.actually.reforested.trees.blocks.wood_builders;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * We need to "promise" that in the future we will make a WoodBlockBuilder.
@@ -12,10 +14,11 @@ package ace.actually.reforested.trees.blocks;
  * @param leavesColour
  * @param likeTree
  */
-public record PromisedWoodType(String name,int[] planksColour, int[] leavesColour,String likeTree) {
+public record PromisedWoodType(String name, int[] planksColour, int[] leavesColour, int @Nullable [] logsColour , String likeTree, boolean natural) {
+
 
     public WoodBlockBuilder create()
     {
-        return new WoodBlockBuilder(name,planksColour,leavesColour,likeTree);
+        return new WoodBlockBuilder(name,planksColour,leavesColour,logsColour,likeTree,natural);
     }
 }

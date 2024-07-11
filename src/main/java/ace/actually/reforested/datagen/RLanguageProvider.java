@@ -1,7 +1,7 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
@@ -26,10 +26,10 @@ public class RLanguageProvider extends FabricLanguageProvider {
                 translationBuilder.add(block,t.get(block));
             }
 
-            String caps = builder.woodName.substring(0, 1).toUpperCase() + builder.woodName.substring(1);
+            String caps = Reforested.toTranslation(builder.woodName);
             translationBuilder.add("entity.reforested."+builder.woodName+"_chest_boat.name",caps+" Boat With Chest");
             translationBuilder.add("item.reforested."+builder.woodName+"_boat",caps+" Boat");
-            translationBuilder.add("item.reforested."+builder.woodName+"_chest_boat",caps+" Chest Boat");
+            translationBuilder.add("item.reforested."+builder.woodName+"_chest_boat",caps+" Boat With Chest");
         }
 
         translationBuilder.add("itemgroup.reforested","Reforested");

@@ -1,6 +1,6 @@
 package ace.actually.reforested;
 
-import ace.actually.reforested.trees.blocks.PromisedWoodType;
+import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.registry.Registries;
@@ -13,10 +13,18 @@ public class RisingEarly implements Runnable{
 
     public static final ArrayList<PromisedWoodType> PROMISED_WOOD_TYPES = new ArrayList<>();
 
+
+    //colour help:
+    //planks distance from 83,83,83
+    //leaves distance from 104,100,104
+    //log distance from 45,45,45
     static
     {
-        PROMISED_WOOD_TYPES.add(new PromisedWoodType("larch",new int[]{-2,-44,-117},new int[]{55,50,-200},"spruce"));
+
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("larch",new int[]{-2,-44,-117},new int[]{55,50,-200},null,"spruce",true));
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("pink_ivory",new int[]{-3,-83,-83},new int[]{-81,22,-49},new int[]{128,84,13},"oak",false));
     }
+
 
     @Override
     public void run() {

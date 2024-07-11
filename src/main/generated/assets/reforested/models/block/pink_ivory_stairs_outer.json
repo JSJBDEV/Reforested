@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "reforested:block/pink_ivory_planks",
+    "side": "reforested:block/pink_ivory_planks",
+    "top": "reforested:block/pink_ivory_planks"
+  }
+}

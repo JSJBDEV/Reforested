@@ -1,4 +1,4 @@
-package ace.actually.reforested.trees.blocks;
+package ace.actually.reforested.trees.blocks.wood_builders;
 
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.trees.blocks.signs.ModdedHangingSign;
@@ -23,6 +23,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,14 +86,21 @@ public class WoodBlockBuilder {
     public int[] PLANKS_COLOUR;
     public int[] LEAVES_COLOUR;
 
+
     public SaplingGenerator saplingGenerator;
 
     public RegistryKey<ConfiguredFeature<?,?>> AS_CONFIGURED_FEATURE;
     public RegistryKey<PlacedFeature> AS_PLACED_FEATURE;
     public String LIKE_TREE;
+    public boolean NATURAL;
+    public int[] LOG_COLOUR;
 
-    public WoodBlockBuilder(String name,int[] planksColour, int[] leavesColour,String likeTree)
+
+
+    public WoodBlockBuilder(String name, int[] planksColour, int[] leavesColour, int @Nullable [] logColour, String likeTree, boolean natural)
     {
+        LOG_COLOUR = logColour;
+        NATURAL=natural;
         LIKE_TREE=likeTree;
         PLANKS_COLOUR = planksColour;
         LEAVES_COLOUR = leavesColour;
@@ -318,7 +326,7 @@ public class WoodBlockBuilder {
 
     public Map<Block,String> produceBlockTranslations()
     {
-        String caps = woodName.substring(0, 1).toUpperCase() + woodName.substring(1);
+        String caps = Reforested.toTranslation(woodName);
 
         HashMap<Block,String> t = new HashMap<>();
         t.put(PLANKS,caps+" Planks");

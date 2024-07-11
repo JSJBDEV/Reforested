@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "reforested:block/pink_ivory_slab"
+    },
+    "type=double": {
+      "model": "reforested:block/pink_ivory_planks"
+    },
+    "type=top": {
+      "model": "reforested:block/pink_ivory_slab_top"
+    }
+  }
+}

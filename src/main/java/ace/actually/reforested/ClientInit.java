@@ -10,6 +10,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.block.entity.HangingSignBlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 
+import java.sql.Ref;
+
 public class ClientInit implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
@@ -19,6 +21,7 @@ public class ClientInit implements ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).LEAVES, RenderLayer.getTranslucent());
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).SAPLING, RenderLayer.getCutout());
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).POTTED_SAPLING, RenderLayer.getCutout());
+            BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).DOOR,RenderLayer.getCutout());
         }
 
 

@@ -1,7 +1,7 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -76,9 +76,21 @@ public class RVibeBasedTexturer {
         {
             int[] c = builder.PLANKS_COLOUR;
             int[] l = builder.LEAVES_COLOUR;
+            if(builder.LOG_COLOUR!=null)
+            {
+                int[] o = builder.LOG_COLOUR;
+                makeBorderedTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+builder.woodName+"_log_top.png",c[0],c[1],c[2],o[0],o[1],o[2]);
+                makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+builder.woodName+"_log.png",o[0],o[1],o[2]);
+            }
+            else
+            {
+                makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+builder.woodName+"_log.png",c[0],c[1],c[2]);
+                makeTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+builder.woodName+"_log_top.png",c[0],c[1],c[2]);
+            }
+
             makeTexture(BLOCK_PATH+"base_planks.png",BLOCK_PATH+builder.woodName+"_planks.png",c[0],c[1],c[2]);
-            makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+builder.woodName+"_log.png",c[0],c[1],c[2]);
-            makeTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+builder.woodName+"_log_top.png",c[0],c[1],c[2]);
+
+
             makeTexture(BLOCK_PATH+"base_door_bottom.png",BLOCK_PATH+builder.woodName+"_door_bottom.png",c[0],c[1],c[2]);
             makeTexture(BLOCK_PATH+"base_door_top.png",BLOCK_PATH+builder.woodName+"_door_top.png",c[0],c[1],c[2]);
             makeTexture(BLOCK_PATH+"base_trapdoor.png",BLOCK_PATH+builder.woodName+"_trapdoor.png",c[0],c[1],c[2]);
@@ -126,11 +138,86 @@ public class RVibeBasedTexturer {
                 for (int j = 0; j < image.getHeight(); j++) {
 
                     Color color = new Color(image.getRGB(i,j),true);
+
                     if(color.getAlpha()>200)
                     {
                         int ra = color.getRed()+addRed;
                         int ga = color.getGreen()+addGreen;
                         int ba = color.getBlue()+addBlue;
+
+                        if(ra>255)
+                        {
+                            ra=255;
+                        }
+                        if(ra<0)
+                        {
+                            ra=0;
+                        }
+                        if(ga>255)
+                        {
+                            ga=255;
+                        }
+                        if(ga<0)
+                        {
+                            ga=0;
+                        }
+                        if(ba>255)
+                        {
+                            ba=255;
+                        }
+                        if(ba<0)
+                        {
+                            ba=0;
+                        }
+
+                        Color ncolor = new Color(ra,ga,ba,255);
+
+                        image.setRGB(i,j,ncolor.getRGB());
+                    }
+
+                }
+            }
+
+
+            ImageIO.write(image,"png",new File(PATH_TO_MOD_INSTANCE+to));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void makeBorderedTexture(String base, String to, int addRed, int addGreen, int addBlue,int addRedBorder, int addBlueBorder, int addGreenBorder)
+    {
+        try {
+            BufferedImage original = ImageIO.read(new File(PATH_TO_MOD_INSTANCE +base));
+            BufferedImage image= new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            image.getGraphics().drawImage(original, 0, 0, null);
+
+            for (int i = 0; i < image.getWidth(); i++) {
+                for (int j = 0; j < image.getHeight(); j++) {
+
+                    Color color = new Color(image.getRGB(i,j),true);
+
+                    if(color.getAlpha()>200)
+                    {
+
+                        int ra;
+                        int ga;
+                        int ba;
+
+                        if(i==0 || j==0 || i==image.getWidth()-1 || j==image.getHeight()-1)
+                        {
+                            ra = color.getRed()+addRedBorder;
+                            ga = color.getGreen()+addGreenBorder;
+                            ba = color.getBlue()+addBlueBorder;
+                        }
+                        else
+                        {
+                            ra = color.getRed()+addRed;
+                            ga = color.getGreen()+addGreen;
+                            ba = color.getBlue()+addBlue;
+                        }
+
 
                         if(ra>255)
                         {

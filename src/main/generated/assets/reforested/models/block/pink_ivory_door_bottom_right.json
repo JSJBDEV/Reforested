@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "reforested:block/pink_ivory_door_bottom",
+    "top": "reforested:block/pink_ivory_door_top"
+  }
+}

@@ -1,7 +1,7 @@
 package ace.actually.reforested.mixin;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.entity.vehicle.ChestBoatEntity;

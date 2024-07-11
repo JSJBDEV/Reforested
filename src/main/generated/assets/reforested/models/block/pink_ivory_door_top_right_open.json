@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right_open",
+  "textures": {
+    "bottom": "reforested:block/pink_ivory_door_bottom",
+    "top": "reforested:block/pink_ivory_door_top"
+  }
+}

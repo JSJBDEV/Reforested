@@ -1,16 +1,22 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.minecraft.registry.Registerable;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
+import net.minecraft.world.gen.foliage.LargeOakFoliagePlacer;
 import net.minecraft.world.gen.foliage.SpruceFoliagePlacer;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.world.gen.trunk.LargeOakTrunkPlacer;
 import net.minecraft.world.gen.trunk.StraightTrunkPlacer;
 
+import java.util.OptionalInt;
+
 public class RConfiguredFeatures {
+
 
 
 
@@ -44,6 +50,20 @@ public class RConfiguredFeatures {
                         )
                                 .ignoreVines()
                                 .build());
+            }
+            case "oak" ->
+            {
+                return new ConfiguredFeature(Feature.TREE,
+                        new TreeFeatureConfig.Builder(
+                        BlockStateProvider.of(builder.LOG),
+                        new LargeOakTrunkPlacer(3, 11, 0),
+                        BlockStateProvider.of(builder.LEAVES),
+                        new LargeOakFoliagePlacer(ConstantIntProvider.create(2), ConstantIntProvider.create(4), 4),
+                        new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
+                )
+                        .ignoreVines()
+                        .build());
+
             }
         }
         return null;

@@ -1,7 +1,7 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.trees.blocks.WoodBlockBuilder;
+import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.item.Items;

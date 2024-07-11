@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "reforested:block/pink_ivory_sapling"
+  }
+}
