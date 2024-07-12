@@ -2,6 +2,7 @@ package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
+import net.minecraft.util.math.random.Random;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +19,7 @@ import java.io.IOException;
  */
 public class RVibeBasedTexturer {
 
-    public static final String PATH_TO_MOD_INSTANCE = "D:\\Programming\\Fabric\\Reforested\\";
+    public static final String PATH_TO_MOD_INSTANCE = "C:\\Users\\acrod\\Documents\\mods\\Fabric\\Reforested\\";
     public static final String BLOCK_PATH = "src\\main\\resources\\assets\\reforested\\textures\\block\\";
     public static final String ITEM_PATH = "src\\main\\resources\\assets\\reforested\\textures\\item\\";
     public static final String MC_PATH = "src\\main\\resources\\assets\\minecraft\\textures\\";
@@ -42,16 +43,16 @@ public class RVibeBasedTexturer {
         int[] c = new int[]{-2,-44,-117};
         int[] l = new int[]{55,50,-200};
         makeTexture(BLOCK_PATH+"base_planks.png",BLOCK_PATH+name+"_planks.png",c[0],c[1],c[2]);
-        makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+name+"_log.png",c[0],c[1],c[2]);
+        makeTexture(BLOCK_PATH+"base_log_0.png",BLOCK_PATH+name+"_log.png",c[0],c[1],c[2]);
         makeTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+name+"_log_top.png",c[0],c[1],c[2]);
         makeTexture(BLOCK_PATH+"base_door_bottom.png",BLOCK_PATH+name+"_door_bottom.png",c[0],c[1],c[2]);
         makeTexture(BLOCK_PATH+"base_door_top.png",BLOCK_PATH+name+"_door_top.png",c[0],c[1],c[2]);
-        makeTexture(BLOCK_PATH+"base_trapdoor.png",BLOCK_PATH+name+"_trapdoor.png",c[0],c[1],c[2]);
+        makeTexture(BLOCK_PATH+"base_trapdoor_0.png",BLOCK_PATH+name+"_trapdoor.png",c[0],c[1],c[2]);
 
-        makeTexture(BLOCK_PATH+"stripped_base_log.png",BLOCK_PATH+"stripped_"+name+"_log.png",c[0],c[1],c[2]);
+        makeTexture(BLOCK_PATH+"stripped_base_log_0.png",BLOCK_PATH+"stripped_"+name+"_log.png",c[0],c[1],c[2]);
         makeTexture(BLOCK_PATH+"stripped_base_log_top.png",BLOCK_PATH+"stripped_"+name+"_log_top.png",c[0],c[1],c[2]);
 
-        makeTexture(BLOCK_PATH+"base_leaves.png",BLOCK_PATH+name+"_leaves.png",l[0],l[1],l[2]);
+        makeTexture(BLOCK_PATH+"base_leaves_0.png",BLOCK_PATH+name+"_leaves.png",l[0],l[1],l[2]);
         makeTexture(BLOCK_PATH+"base_sapling.png",BLOCK_PATH+name+"_sapling.png",l[0],l[1],l[2]);
 
         makeTexture(ITEM_PATH+"base_door.png",ITEM_PATH+name+"_door.png",c[0],c[1],c[2]);
@@ -74,17 +75,20 @@ public class RVibeBasedTexturer {
         Reforested.LOGGER.info("Generating textures by vibe...");
         for(WoodBlockBuilder builder: Reforested.WOOD_BLOCKS)
         {
+            Random random = Random.create(builder.woodName.chars().sum());
+            int useBase = random.nextInt(3);
+
             int[] c = builder.PLANKS_COLOUR;
             int[] l = builder.LEAVES_COLOUR;
             if(builder.LOG_COLOUR!=null)
             {
                 int[] o = builder.LOG_COLOUR;
                 makeBorderedTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+builder.woodName+"_log_top.png",c[0],c[1],c[2],o[0],o[1],o[2]);
-                makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+builder.woodName+"_log.png",o[0],o[1],o[2]);
+                makeTexture(BLOCK_PATH+"base_log_"+useBase+".png",BLOCK_PATH+builder.woodName+"_log.png",o[0],o[1],o[2]);
             }
             else
             {
-                makeTexture(BLOCK_PATH+"base_log.png",BLOCK_PATH+builder.woodName+"_log.png",c[0],c[1],c[2]);
+                makeTexture(BLOCK_PATH+"base_log_"+useBase+".png",BLOCK_PATH+builder.woodName+"_log.png",c[0],c[1],c[2]);
                 makeTexture(BLOCK_PATH+"base_log_top.png",BLOCK_PATH+builder.woodName+"_log_top.png",c[0],c[1],c[2]);
             }
 
@@ -93,12 +97,18 @@ public class RVibeBasedTexturer {
 
             makeTexture(BLOCK_PATH+"base_door_bottom.png",BLOCK_PATH+builder.woodName+"_door_bottom.png",c[0],c[1],c[2]);
             makeTexture(BLOCK_PATH+"base_door_top.png",BLOCK_PATH+builder.woodName+"_door_top.png",c[0],c[1],c[2]);
-            makeTexture(BLOCK_PATH+"base_trapdoor.png",BLOCK_PATH+builder.woodName+"_trapdoor.png",c[0],c[1],c[2]);
 
-            makeTexture(BLOCK_PATH+"stripped_base_log.png",BLOCK_PATH+"stripped_"+builder.woodName+"_log.png",c[0],c[1],c[2]);
+
+            makeTexture(BLOCK_PATH+"stripped_base_log_"+useBase+".png",BLOCK_PATH+"stripped_"+builder.woodName+"_log.png",c[0],c[1],c[2]);
             makeTexture(BLOCK_PATH+"stripped_base_log_top.png",BLOCK_PATH+"stripped_"+builder.woodName+"_log_top.png",c[0],c[1],c[2]);
 
-            makeTexture(BLOCK_PATH+"base_leaves.png",BLOCK_PATH+builder.woodName+"_leaves.png",l[0],l[1],l[2]);
+            useBase = random.nextInt(3);
+            makeTexture(BLOCK_PATH+"base_leaves_"+useBase+".png",BLOCK_PATH+builder.woodName+"_leaves.png",l[0],l[1],l[2]);
+
+            useBase = random.nextInt(3);
+            makeTexture(BLOCK_PATH+"base_trapdoor_"+useBase+".png",BLOCK_PATH+builder.woodName+"_trapdoor.png",c[0],c[1],c[2]);
+
+
             makeTexture(BLOCK_PATH+"base_sapling.png",BLOCK_PATH+builder.woodName+"_sapling.png",l[0],l[1],l[2]);
 
             makeTexture(ITEM_PATH+"base_door.png",ITEM_PATH+builder.woodName+"_door.png",c[0],c[1],c[2]);

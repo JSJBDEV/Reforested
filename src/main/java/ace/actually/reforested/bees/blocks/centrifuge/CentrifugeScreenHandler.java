@@ -1,6 +1,7 @@
 package ace.actually.reforested.bees.blocks.centrifuge;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.bees.blocks.ProgressData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -20,7 +21,7 @@ public class CentrifugeScreenHandler extends ScreenHandler {
         return label;
     }
 
-    public CentrifugeScreenHandler(int i, PlayerInventory playerInventory, CentrifugeBlockEntity.ProgressData progressData)
+    public CentrifugeScreenHandler(int i, PlayerInventory playerInventory, ProgressData progressData)
     {
         this(i,playerInventory, new SimpleInventory(10));
         label=progressData.label();

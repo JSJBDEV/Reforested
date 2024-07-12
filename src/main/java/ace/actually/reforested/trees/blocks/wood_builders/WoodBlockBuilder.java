@@ -344,6 +344,8 @@ public class WoodBlockBuilder {
         t.put(SIGN,caps+" Sign");
         t.put(HANGING_SIGN,caps+" Hanging Sign");
         t.put(TRAPDOOR,caps+" Trapdoor");
+        t.put(STRIPPED_WOOD,caps+" Stripped Wood");
+        t.put(LEAVES,caps+" Leaves");
 
         return t;
     }

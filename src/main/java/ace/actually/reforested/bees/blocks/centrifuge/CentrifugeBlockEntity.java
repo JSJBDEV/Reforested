@@ -3,6 +3,7 @@ package ace.actually.reforested.bees.blocks.centrifuge;
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
 import ace.actually.reforested.bees.blocks.GenericInventory;
+import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -10,11 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -26,11 +23,20 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import team.reborn.energy.api.base.SimpleEnergyStorage;
 
-public class CentrifugeBlockEntity extends BlockEntity implements GenericInventory, ExtendedScreenHandlerFactory<CentrifugeBlockEntity.ProgressData> {
+public class CentrifugeBlockEntity extends BlockEntity implements GenericInventory, ExtendedScreenHandlerFactory<ProgressData> {
     public CentrifugeBlockEntity(BlockPos pos, BlockState state) {
         super(Reforested.CENTRIFUGE_BLOCK_ENTITY, pos, state);
     }
+
+    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 100,0) {
+        @Override
+        protected void onFinalCommit() {
+            markDirty();
+        }
+    };
+
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(10, ItemStack.EMPTY);
 
 
@@ -78,7 +84,9 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
     public static void tick(World world, BlockPos pos, BlockState state, CentrifugeBlockEntity be) {
         if(be.getTicksToComplete()!=-1 && be.inventory.get(9).isEmpty() && !world.isClient)
         {
+
             be.setTicksToComplete(-1);
+
         }
         if(!be.inventory.get(9).isEmpty() && CentrifugeRecipes.RECIPES.containsKey(be.inventory.get(9).getItem()) && !world.isClient)
         {
@@ -134,20 +142,14 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
 
 
             }
-            else if(be.getTicksToComplete()>0)
+            else if(be.getTicksToComplete()>0  && be.energyStorage.amount>10)
             {
+                be.energyStorage.amount-=10;
                 be.setTicksToComplete(be.getTicksToComplete()-1);
                 world.updateListeners(pos,state,state, ApiaryBlock.NOTIFY_LISTENERS);
             }
         }
 
-    }
-
-    public record ProgressData(NbtCompound label)
-    {
-        public static final PacketCodec<RegistryByteBuf, ProgressData> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.NBT_COMPOUND,
-                ProgressData::label,
-                ProgressData::new);
     }
 
 

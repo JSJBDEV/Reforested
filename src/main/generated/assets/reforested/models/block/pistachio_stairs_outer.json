@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "reforested:block/pistachio_planks",
+    "side": "reforested:block/pistachio_planks",
+    "top": "reforested:block/pistachio_planks"
+  }
+}

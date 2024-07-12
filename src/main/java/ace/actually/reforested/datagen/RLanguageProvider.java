@@ -30,10 +30,13 @@ public class RLanguageProvider extends FabricLanguageProvider {
             translationBuilder.add("entity.reforested."+builder.woodName+"_chest_boat.name",caps+" Boat With Chest");
             translationBuilder.add("item.reforested."+builder.woodName+"_boat",caps+" Boat");
             translationBuilder.add("item.reforested."+builder.woodName+"_chest_boat",caps+" Boat With Chest");
-        }
+            translationBuilder.add(builder.LOGS_BLOCKS_TAG,caps+" Logs");
 
+        }
+        translationBuilder.add("tag.item.c.honeycombs","Honeycombs");
         translationBuilder.add("itemgroup.reforested","Reforested");
         translationBuilder.add(Reforested.CENTRIFUGE_BLOCK,"Centrifuge");
+        translationBuilder.add(Reforested.PEAT_ENGINE_BLOCK,"Peat Engine");
         translationBuilder.add(Reforested.PROPOLIS,"Propolis");
         translationBuilder.add(Reforested.FIBROUS_COMB,"Fibrous Comb");
         translationBuilder.add(Reforested.APIARY_BLOCK,"Apiary");

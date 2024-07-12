@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "reforested:block/abura_slab"
+    },
+    "type=double": {
+      "model": "reforested:block/abura_planks"
+    },
+    "type=top": {
+      "model": "reforested:block/abura_slab_top"
+    }
+  }
+}

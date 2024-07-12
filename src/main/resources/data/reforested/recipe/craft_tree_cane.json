@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "reforested:larch_planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "P P",
+    " S ",
+    "P P"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:tree_cane"
+  }
+}

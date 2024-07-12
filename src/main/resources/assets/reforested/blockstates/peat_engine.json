@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "reforested:block/peat_engine"
+    },
+    "facing=down": {
+      "model": "reforested:block/peat_engine",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "reforested:block/peat_engine",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "reforested:block/peat_engine",
+      "x": 90,
+      "y": 270
+    },
+    "facing=south": {
+      "model": "reforested:block/peat_engine",
+      "x": 90,
+      "y": 180
+    },
+    "facing=north": {
+      "model": "reforested:block/peat_engine",
+      "x": 90,
+      "y": 0
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "reforested:block/abura_door_bottom",
+    "top": "reforested:block/abura_door_top"
+  }
+}

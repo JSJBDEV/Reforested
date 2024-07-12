@@ -1,8 +1,10 @@
 package ace.actually.reforested;
 
+import ace.actually.reforested.datagen.RLootProvider;
 import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
@@ -22,7 +24,13 @@ public class RisingEarly implements Runnable{
     {
 
         PROMISED_WOOD_TYPES.add(new PromisedWoodType("larch",new int[]{-2,-44,-117},new int[]{55,50,-200},null,"spruce",true));
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("abura",new int[]{86,43,0},new int[]{-104,68,-90},null,"oak",false));
         PROMISED_WOOD_TYPES.add(new PromisedWoodType("pink_ivory",new int[]{-3,-83,-83},new int[]{-81,22,-49},new int[]{128,84,13},"oak",false));
+
+        //20,47,17 - 5,136,0
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("pistachio",new int[]{-63,-36,-66},new int[]{-99,36,-104},null,"cherry",false));
+
+
     }
 
 
