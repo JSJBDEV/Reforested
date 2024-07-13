@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 
+import java.sql.Ref;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,16 +32,21 @@ public class RLanguageProvider extends FabricLanguageProvider {
             translationBuilder.add("item.reforested."+builder.woodName+"_boat",caps+" Boat");
             translationBuilder.add("item.reforested."+builder.woodName+"_chest_boat",caps+" Boat With Chest");
             translationBuilder.add(builder.LOGS_BLOCKS_TAG,caps+" Logs");
+            translationBuilder.add(builder.LOGS_ITEMS_TAG,caps+" Logs");
 
         }
         translationBuilder.add("tag.item.c.honeycombs","Honeycombs");
-        translationBuilder.add("itemgroup.reforested","Reforested");
+        translationBuilder.add("itemgroup.reforested.trees","Reforested: Arboriculture");
+        translationBuilder.add("itemgroup.reforested.bees","Reforested: Apiculture");
+        translationBuilder.add("itemgroup.reforested.industry","Reforested: Industria");
         translationBuilder.add(Reforested.CENTRIFUGE_BLOCK,"Centrifuge");
         translationBuilder.add(Reforested.PEAT_ENGINE_BLOCK,"Peat Engine");
         translationBuilder.add(Reforested.PROPOLIS,"Propolis");
+        translationBuilder.add(Reforested.PEAT,"peat");
         translationBuilder.add(Reforested.FIBROUS_COMB,"Fibrous Comb");
         translationBuilder.add(Reforested.APIARY_BLOCK,"Apiary");
         translationBuilder.add(Reforested.BEE_ANALYSER_ITEM,"Bee Analyser");
+        translationBuilder.add(Reforested.BOG_BLOCK,"Block o' Bog");
 
         translationBuilder.add("text.reforested.typeof","This is a ");
         translationBuilder.add("thing.reforested.bee","Bee");

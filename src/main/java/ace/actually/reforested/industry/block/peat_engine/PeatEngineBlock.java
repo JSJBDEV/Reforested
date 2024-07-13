@@ -1,4 +1,4 @@
-package ace.actually.reforested.bees.blocks.peat_engine;
+package ace.actually.reforested.industry.block.peat_engine;
 
 import ace.actually.reforested.Reforested;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;

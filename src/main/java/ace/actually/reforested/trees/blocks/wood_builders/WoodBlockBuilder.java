@@ -194,10 +194,10 @@ public class WoodBlockBuilder {
         HANGING_SIGN_ITEM = Registry.register(Registries.ITEM,Identifier.of("reforested",woodName+"_hanging_sign"),
                 new HangingSignItem(HANGING_SIGN,WALL_HANGING_SIGN,new Item.Settings()));
 
-        Reforested.ITEMS.add(SIGN_ITEM);
-        Reforested.ITEMS.add(HANGING_SIGN_ITEM);
-        Reforested.ITEMS.add(BOAT);
-        Reforested.ITEMS.add(CHEST_BOAT);
+        Reforested.TREE_ITEMS.add(SIGN_ITEM);
+        Reforested.TREE_ITEMS.add(HANGING_SIGN_ITEM);
+        Reforested.TREE_ITEMS.add(BOAT);
+        Reforested.TREE_ITEMS.add(CHEST_BOAT);
     }
 
     public BlockFamily createFamily()
@@ -222,7 +222,7 @@ public class WoodBlockBuilder {
     {
         Registry.register(Registries.BLOCK,id,block);
 
-        Reforested.ITEMS.add(Registry.register(Registries.ITEM,id,new BlockItem(block,new Item.Settings())));
+        Reforested.TREE_ITEMS.add(Registry.register(Registries.ITEM,id,new BlockItem(block,new Item.Settings())));
 
         return block;
     }

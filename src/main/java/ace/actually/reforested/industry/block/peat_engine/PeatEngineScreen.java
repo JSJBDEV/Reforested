@@ -1,4 +1,4 @@
-package ace.actually.reforested.bees.blocks.peat_engine;
+package ace.actually.reforested.industry.block.peat_engine;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -17,7 +17,7 @@ public class PeatEngineScreen extends HandledScreen<PeatEngineScreenHandler> {
 
     }
 
-    private static final Identifier TEXTURE = Identifier.of("reforested","textures/gui/centrifuge.png");
+    private static final Identifier TEXTURE = Identifier.of("reforested","textures/gui/engine.png");
 
 
     @Override

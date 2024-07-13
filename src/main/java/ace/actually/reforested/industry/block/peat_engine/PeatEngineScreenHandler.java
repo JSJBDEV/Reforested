@@ -1,4 +1,4 @@
-package ace.actually.reforested.bees.blocks.peat_engine;
+package ace.actually.reforested.industry.block.peat_engine;
 
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.blocks.ProgressData;
@@ -39,6 +39,17 @@ public class PeatEngineScreenHandler extends ScreenHandler {
         //some inventories do custom logic when a player opens it.
         inventory.onOpen(playerInventory.player);
         this.addSlot(new Slot(inventory, 0, 26, 35));
+
+        int m;
+        int l;
+        for (m = 0; m < 3; ++m) {
+            for (l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
+            }
+        }
+        for (m = 0; m < 9; ++m) {
+            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
+        }
 
 
     }

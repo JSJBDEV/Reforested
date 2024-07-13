@@ -3,9 +3,10 @@ package ace.actually.reforested;
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import ace.actually.reforested.bees.blocks.centrifuge.*;
-import ace.actually.reforested.bees.blocks.peat_engine.PeatEngineBlock;
-import ace.actually.reforested.bees.blocks.peat_engine.PeatEngineBlockEntity;
-import ace.actually.reforested.bees.blocks.peat_engine.PeatEngineScreenHandler;
+import ace.actually.reforested.industry.block.peat_engine.BogBlock;
+import ace.actually.reforested.industry.block.peat_engine.PeatEngineBlock;
+import ace.actually.reforested.industry.block.peat_engine.PeatEngineBlockEntity;
+import ace.actually.reforested.industry.block.peat_engine.PeatEngineScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.datagen.RLootProvider;
 import ace.actually.reforested.trees.blocks.tree_breeding.TreeBreedingRecipes;
@@ -25,7 +26,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -42,10 +42,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import team.reborn.energy.api.EnergyStorage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static net.minecraft.world.poi.PointOfInterestTypes.POI_STATES_TO_TYPE;
 
@@ -56,13 +53,24 @@ public class Reforested implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("reforested");
 
 
-	public static ArrayList<Item> ITEMS = new ArrayList<>();
-	public static final ItemGroup TAB = FabricItemGroup.builder()
-			.icon(() -> new ItemStack(Items.ACACIA_LEAVES))
-			.displayName(Text.translatable("itemgroup.reforested"))
-			.build();
+	public static ArrayList<Item> TREE_ITEMS = new ArrayList<>();
+	public static ArrayList<Item> BEE_ITEMS = new ArrayList<>();
+	public static ArrayList<Item> INDUSTRY_ITEMS = new ArrayList<>();
 
 	public static final ArrayList<WoodBlockBuilder> WOOD_BLOCKS = new ArrayList<>();
+
+	public static final ItemGroup TREES = FabricItemGroup.builder()
+			.icon(() -> new ItemStack(WOOD_BLOCKS.get(0).LEAVES))
+			.displayName(Text.translatable("itemgroup.reforested.trees"))
+			.build();
+	public static final ItemGroup BEES = FabricItemGroup.builder()
+			.icon(() -> new ItemStack(Reforested.FIBROUS_COMB))
+			.displayName(Text.translatable("itemgroup.reforested.bees"))
+			.build();
+	public static final ItemGroup INDUSTRY = FabricItemGroup.builder()
+			.icon(() -> new ItemStack(Reforested.PEAT_ENGINE_BLOCK))
+			.displayName(Text.translatable("itemgroup.reforested.industry"))
+			.build();
 
 
 
@@ -80,7 +88,9 @@ public class Reforested implements ModInitializer {
 		registerBlockEntities();
 		registerOtherBlocks();
 		registerOtherItems();
-		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tab"),TAB);
+		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tree_tab"), TREES);
+		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","bee_tab"), BEES);
+		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","industry_tab"), INDUSTRY);
 		registerOtherThings();
 		CentrifugeRecipes.registerRecipes();
 		TreeBreedingRecipes.registerRecipes();
@@ -91,9 +101,17 @@ public class Reforested implements ModInitializer {
 						.addFeature(GenerationStep.Feature.LAKES,RegistryKey.of(RegistryKeys.PLACED_FEATURE,Identifier.of("reforested","larch"))));
 
 
-		ITEMS.forEach(item->
+		TREE_ITEMS.forEach(item->
 		{
-			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(TAB).get()).register(a->a.add(item));
+			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(TREES).get()).register(a->a.add(item));
+		});
+		BEE_ITEMS.forEach(item->
+		{
+			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(BEES).get()).register(a->a.add(item));
+		});
+		INDUSTRY_ITEMS.forEach(item->
+		{
+			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(INDUSTRY).get()).register(a->a.add(item));
 		});
 		LOGGER.info("Hello Fabric world!");
 
@@ -103,12 +121,14 @@ public class Reforested implements ModInitializer {
 	public static final CentrifugeBlock CENTRIFUGE_BLOCK = new CentrifugeBlock(AbstractBlock.Settings.create());
 	public static final TreeCaneBlock TREE_CANE_BLOCK = new TreeCaneBlock(AbstractBlock.Settings.create());
 	public static final PeatEngineBlock PEAT_ENGINE_BLOCK = new PeatEngineBlock(AbstractBlock.Settings.create());
+	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.create().ticksRandomly());
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","centrifuge"),CENTRIFUGE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","tree_cane"),TREE_CANE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","peat_engine"),PEAT_ENGINE_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","bog"),BOG_BLOCK);
 	}
 
 	public static List<Block> ADD_BEEHIVE = new ArrayList<>();
@@ -176,16 +196,17 @@ public class Reforested implements ModInitializer {
 
 	private void registerOtherItems()
 	{
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_comb"), FIBROUS_COMB));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","pistachio_nut"),PISTACHIO_NUT));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_comb"), FIBROUS_COMB));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
+		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","pistachio_nut"),PISTACHIO_NUT));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
 
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat_engine"),new BlockItem(PEAT_ENGINE_BLOCK,new Item.Settings())));
-		ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","tree_cane"),new BlockItem(TREE_CANE_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat_engine"),new BlockItem(PEAT_ENGINE_BLOCK,new Item.Settings())));
+		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","tree_cane"),new BlockItem(TREE_CANE_BLOCK,new Item.Settings())));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bog"),new BlockItem(BOG_BLOCK,new Item.Settings())));
 	}
 
 	public static ExtendedScreenHandlerType<CentrifugeScreenHandler, ProgressData> CENTRIFUGE_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(CentrifugeScreenHandler::new, ProgressData.PACKET_CODEC);

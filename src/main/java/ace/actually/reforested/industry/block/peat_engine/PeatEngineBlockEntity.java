@@ -1,4 +1,4 @@
-package ace.actually.reforested.bees.blocks.peat_engine;
+package ace.actually.reforested.industry.block.peat_engine;
 
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.blocks.GenericInventory;
@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -30,7 +29,7 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
         super(Reforested.PEAT_ENGINE_BLOCK_ENTITY, pos, state);
     }
 
-    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 100,0) {
+    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 0,100) {
         @Override
         protected void onFinalCommit() {
             markDirty();
@@ -84,8 +83,9 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
     public static void tick(World world, BlockPos pos, BlockState state, PeatEngineBlockEntity be) {
         if(be.ticksToComplete<1 && be.inventory.getFirst().isOf(Reforested.PEAT))
         {
-            be.setTicksToComplete(1000);
             be.inventory.getFirst().decrement(1);
+            be.setTicksToComplete(1000);
+
         }
         if(be.ticksToComplete>0)
         {

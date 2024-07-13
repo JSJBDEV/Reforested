@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 2,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "reforested:peat",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "reforested:bog",
+              "properties": {
+                "is_mature": "true"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
