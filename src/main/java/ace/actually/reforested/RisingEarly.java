@@ -30,7 +30,11 @@ public class RisingEarly implements Runnable{
         //20,47,17 - 5,136,0
         PROMISED_WOOD_TYPES.add(new PromisedWoodType("pistachio",new int[]{-63,-36,-66},new int[]{-99,36,-104},null,"cherry",false));
 
+        //167,97,4 - 145, 4 113
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("plum",new int[]{84,14,-79},new int[]{41,-96,9},null,"cherry",false));
 
+        //63,36,0 - 132 217 0
+        PROMISED_WOOD_TYPES.add(new PromisedWoodType("rosewood",new int[]{-20,-47,-83},new int[]{28,117,-104},null,"cherry",false));
     }
 
 

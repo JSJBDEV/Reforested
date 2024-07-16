@@ -1,6 +1,7 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -35,6 +36,7 @@ public class RLanguageProvider extends FabricLanguageProvider {
             translationBuilder.add(builder.LOGS_ITEMS_TAG,caps+" Logs");
 
         }
+
         translationBuilder.add("tag.item.c.honeycombs","Honeycombs");
         translationBuilder.add("itemgroup.reforested.trees","Reforested: Arboriculture");
         translationBuilder.add("itemgroup.reforested.bees","Reforested: Apiculture");
@@ -42,24 +44,37 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Reforested.CENTRIFUGE_BLOCK,"Centrifuge");
         translationBuilder.add(Reforested.PEAT_ENGINE_BLOCK,"Peat Engine");
         translationBuilder.add(Reforested.PROPOLIS,"Propolis");
-        translationBuilder.add(Reforested.PEAT,"peat");
+        translationBuilder.add(Reforested.PEAT,"Peat");
         translationBuilder.add(Reforested.FIBROUS_COMB,"Fibrous Comb");
+        translationBuilder.add(Reforested.PEATY_COMB,"Peaty Comb");
+        translationBuilder.add(Reforested.STONEY_COMB,"Stoney Comb");
+        translationBuilder.add(Reforested.COLD_COMB,"Cold Comb");
+        translationBuilder.add(Reforested.HOT_COMB,"Hot Comb");
         translationBuilder.add(Reforested.APIARY_BLOCK,"Apiary");
         translationBuilder.add(Reforested.BEE_ANALYSER_ITEM,"Bee Analyser");
         translationBuilder.add(Reforested.BOG_BLOCK,"Block o' Bog");
+        translationBuilder.add(Reforested.ROYAL_JELLY,"Royal Jelly");
+        translationBuilder.add(Reforested.PISTACHIO_NUT,"Pistachio Nut");
+        translationBuilder.add(Reforested.PLUM,"Plum");
+        translationBuilder.add(Reforested.TREE_CANE_BLOCK,"Tree Breeding Canes");
 
-        translationBuilder.add("text.reforested.typeof","This is a ");
+        for(String bee: BeeLookups.BEE_TYPES)
+        {
+            translationBuilder.add("bee.reforested."+bee,Reforested.toTranslation(bee));
+        }
+        for(String beeFamily: BeeLookups.allFamilies())
+        {
+            translationBuilder.add("family.bee.reforested."+beeFamily,Reforested.toTranslation(beeFamily));
+        }
+
         translationBuilder.add("thing.reforested.bee","Bee");
 
-        translationBuilder.add("bee.reforested.busy","Busy");
-        translationBuilder.add("bee.reforested.civil","Civil");
-        translationBuilder.add("bee.reforested.employed","Employed");
-        translationBuilder.add("bee.reforested.honey","Honey");
-        translationBuilder.add("bee.reforested.candied","Candied");
-        translationBuilder.add("bee.reforested.saccharine","Saccharine");
-        translationBuilder.add("bee.reforested.lanky","Lanky");
-        translationBuilder.add("bee.reforested.stringy","Stringy");
-        translationBuilder.add("bee.reforested.affable","Affable");
+
+        translationBuilder.add("text.reforested.typeof","This is a ");
+        translationBuilder.add("text.reforested.bee.temperature","Preferred Temperature: ");
+        translationBuilder.add("text.reforested.bee.humidity","Likes Humidity: ");
+        translationBuilder.add("text.reforested.bee.natural","Is Natural: ");
+
 
     }
 }

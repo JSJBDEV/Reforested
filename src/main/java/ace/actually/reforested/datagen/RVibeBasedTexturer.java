@@ -1,6 +1,7 @@
 package ace.actually.reforested.datagen;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import net.minecraft.util.math.random.Random;
 
@@ -22,6 +23,7 @@ public class RVibeBasedTexturer {
     public static final String PATH_TO_MOD_INSTANCE = "C:\\Users\\acrod\\Documents\\mods\\Fabric\\Reforested\\";
     public static final String BLOCK_PATH = "src\\main\\resources\\assets\\reforested\\textures\\block\\";
     public static final String ITEM_PATH = "src\\main\\resources\\assets\\reforested\\textures\\item\\";
+    public static final String BEE_PATH = "src\\main\\resources\\assets\\reforested\\textures\\entity\\bee\\";
     public static final String MC_PATH = "src\\main\\resources\\assets\\minecraft\\textures\\";
 
 
@@ -125,6 +127,19 @@ public class RVibeBasedTexturer {
             makeTexture(MC_PATH+"entity\\signs\\hanging\\base.png",MC_PATH+"entity\\signs\\hanging\\"+builder.woodName+".png",c[0],c[1],c[2]);
 
             makeTexture(MC_PATH+"gui\\hanging_signs\\base.png",MC_PATH+"gui\\hanging_signs\\"+builder.woodName+".png",c[0],c[1],c[2]);
+        }
+
+        //18,18,18
+        for(String bee: BeeLookups.BEE_TYPES)
+        {
+            Random random = Random.create(bee.chars().sum());
+            int x = random.nextBetween(-100,150);
+            int y = random.nextBetween(-100,150);
+            int z = random.nextBetween(-100,150);
+            makeTexture(BEE_PATH+"base_bee.png",BEE_PATH+"used\\"+bee+"_bee.png",x,y,z);
+            makeTexture(BEE_PATH+"base_bee_angry.png",BEE_PATH+"used\\"+bee+"_bee_angry.png",x,y,z);
+            makeTexture(BEE_PATH+"base_bee_angry_nectar.png",BEE_PATH+"used\\"+bee+"_bee_angry_nectar.png",x,y,z);
+            makeTexture(BEE_PATH+"base_bee_nectar.png",BEE_PATH+"used\\"+bee+"_bee_nectar.png",x,y,z);
         }
 
     }

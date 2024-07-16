@@ -15,7 +15,7 @@ import java.util.List;
  * to add a new bee, simply use addBee statically
  * to add a new breeding pair, use addBreedingCombination
  * it really is that simple.
- * NOTE: when adding a new bee you should put it's texture in resources/assets/reforested/textures/entity/bee
+ * NOTE: when adding a new bee you should put its texture in resources/assets/reforested/textures/entity/bee
  *
  */
 public class BeeLookups {
@@ -40,6 +40,9 @@ public class BeeLookups {
         addBee("civil","courtly",700,3.0f,true,false,0.75f,Items.HONEYCOMB);
         addBee("affable","courtly",700,3.4f,false,false,0.75f,Items.HONEYCOMB);
 
+        addBee("gracious","noble",1000,3.0f,false,false,0.75f,Items.HONEYCOMB,Reforested.ROYAL_JELLY);
+        addBee("titled","noble",1100,4.0f,false,false,0.75f,Items.HONEYCOMB,Reforested.ROYAL_JELLY);
+
         addBee("honey","honey",600,3.0f,true,false,0.75f,Items.HONEYCOMB,Items.HONEY_BOTTLE);
         addBee("candied","honey",600,3.3f,false,false,0.75f,Items.HONEYCOMB,Items.HONEY_BOTTLE);
         addBee("saccharine","honey",1000,4.1f,false,false,0.75f,Items.HONEYCOMB,Items.HONEY_BOTTLE);
@@ -47,11 +50,31 @@ public class BeeLookups {
         addBee("stringy","fibrous",1000,3.1f,false,false,0.75f, Reforested.FIBROUS_COMB);
         addBee("lanky","fibrous",1000,4.1f,false,false,0.75f, Reforested.FIBROUS_COMB);
 
+        addBee("cold","frozen",1200,3f,true,false,0.2f,Reforested.COLD_COMB);
+        addBee("barren","frozen",1200,4f,false,false,0.2f,Reforested.COLD_COMB);
+
+        addBee("burning","warm",500,2f,true,false,1.2f,Reforested.HOT_COMB);
+        addBee("blazing","warm",600,3f,false,false,1.2f,Reforested.HOT_COMB);
+
+        addBee("gravely","stoney",900,3f,true,false,0.5f,Reforested.STONEY_COMB);
+        addBee("earthen","stoney",800,3f,false,false,0.2f,Reforested.STONEY_COMB);
+
+        addBee("fen","boggy",800,3f,false,true,0.75f,Reforested.PEATY_COMB);
+        addBee("morass","boggy",800,5f,false,true,0.75f,Reforested.PEATY_COMB);
+
+
         addBreedingCombination("busy","civil","stringy",0.3f);
         addBreedingCombination("civil","employed","affable",0.3f);
         addBreedingCombination("honey","busy","candied",0.3f);
         addBreedingCombination("candied","honey","saccharine",0.3f);
         addBreedingCombination("affable","stringy","lanky",0.3f);
+        addBreedingCombination("civil","candied","gracious",0.3f);
+        addBreedingCombination("gracious","affable","titled",0.3f);
+        addBreedingCombination("burning","stringy","blazing",0.3f);
+        addBreedingCombination("cold","gravely","barren",0.3f);
+        addBreedingCombination("employed","gravely","earthen",0.3f);
+        addBreedingCombination("cold","busy","fen",0.3f);
+        addBreedingCombination("fen","earthen","morass",0.3f);
     }
 
     public static void addBee(String name, String branch,int ticksNoNectar,float productivity,boolean isNatural,boolean likesHumidity,float preferredTemperature, Item... products)
@@ -69,6 +92,19 @@ public class BeeLookups {
     public static void addBreedingCombination(String type1, String type2, String mutation, float chance)
     {
         BEE_BREEDING_CHANCES.add(new BreedingInstance(type1, type2, mutation, chance));
+    }
+
+    public static List<String> allFamilies()
+    {
+        List<String> families = new ArrayList<>();
+        for(String key: BEE_FAMILY_MAP.keySet())
+        {
+            if(!families.contains(BEE_FAMILY_MAP.get(key)))
+            {
+                families.add(BEE_FAMILY_MAP.get(key));
+            }
+        }
+        return families;
     }
 
     public record BreedingInstance(String type1, String type2, String mutation, float chance){}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "tag": "reforested:rosewood_logs"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:rosewood_planks"
+  }
+}

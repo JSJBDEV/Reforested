@@ -24,9 +24,32 @@ public class BeeRenderMixin {
     private void init(BeeEntity beeEntity, CallbackInfoReturnable<Identifier> cir) throws IOException {
         if(beeEntity instanceof IReforestedBee bee && bee.reforested$getBeeType()!=null && !bee.reforested$getBeeType().isEmpty() && !bee.reforested$getBeeType().contains("honey"))
         {
+
             if(!bee.reforested$getBeeType().equals("honey"))
             {
-                cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/"+bee.reforested$getBeeType()+"_bee.png"));
+                if(beeEntity.hasAngerTime())
+                {
+                    if(beeEntity.hasNectar())
+                    {
+                        cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/used/"+bee.reforested$getBeeType()+"_bee_angry_nectar.png"));
+                    }
+                    else
+                    {
+                        cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/used/"+bee.reforested$getBeeType()+"_bee_angry.png"));
+                    }
+                }
+                else
+                {
+                    if(beeEntity.hasNectar())
+                    {
+                        cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/used/"+bee.reforested$getBeeType()+"_bee_nectar.png"));
+                    }
+                    else
+                    {
+                        cir.setReturnValue(Identifier.of("reforested","textures/entity/bee/used/"+bee.reforested$getBeeType()+"_bee.png"));
+                    }
+                }
+
             }
         }
     }

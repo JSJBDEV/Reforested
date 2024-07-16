@@ -84,14 +84,17 @@ public class Reforested implements ModInitializer {
 		{
 			WOOD_BLOCKS.add(promisedWoodType.create());
 		}
+
 		RLootProvider.ADDITIONAL_LEAF_DROPS.put("pistachio", Reforested.PISTACHIO_NUT);
-		registerBlockEntities();
+		RLootProvider.ADDITIONAL_LEAF_DROPS.put("plum",Reforested.PLUM);
+
 		registerOtherBlocks();
 		registerOtherItems();
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","tree_tab"), TREES);
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","bee_tab"), BEES);
 		Registry.register(Registries.ITEM_GROUP, Identifier.of("reforested","industry_tab"), INDUSTRY);
 		registerOtherThings();
+		registerBlockEntities();
 		CentrifugeRecipes.registerRecipes();
 		TreeBreedingRecipes.registerRecipes();
 
@@ -118,10 +121,10 @@ public class Reforested implements ModInitializer {
 	}
 
 	public static final ApiaryBlock APIARY_BLOCK = new ApiaryBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));
-	public static final CentrifugeBlock CENTRIFUGE_BLOCK = new CentrifugeBlock(AbstractBlock.Settings.create());
+	public static final CentrifugeBlock CENTRIFUGE_BLOCK = new CentrifugeBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final TreeCaneBlock TREE_CANE_BLOCK = new TreeCaneBlock(AbstractBlock.Settings.create());
-	public static final PeatEngineBlock PEAT_ENGINE_BLOCK = new PeatEngineBlock(AbstractBlock.Settings.create());
-	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.create().ticksRandomly());
+	public static final PeatEngineBlock PEAT_ENGINE_BLOCK = new PeatEngineBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
+	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.copy(Blocks.MUD).ticksRandomly());
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
@@ -189,17 +192,30 @@ public class Reforested implements ModInitializer {
 
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());
 	public static final HoneycombItem FIBROUS_COMB = new HoneycombItem(new Item.Settings());
+	public static final HoneycombItem COLD_COMB = new HoneycombItem(new Item.Settings());
+	public static final HoneycombItem HOT_COMB = new HoneycombItem(new Item.Settings());
+	public static final HoneycombItem STONEY_COMB = new HoneycombItem(new Item.Settings());
+	public static final HoneycombItem PEATY_COMB = new HoneycombItem(new Item.Settings());
 	public static final Item PROPOLIS = new Item(new Item.Settings());
 	public static final Item PISTACHIO_NUT = new Item(new Item.Settings());
 	public static final Item PEAT = new Item(new Item.Settings());
+	public static final Item ROYAL_JELLY = new HoneyBottleItem(new Item.Settings());
+	public static final Item PLUM = new Item(new Item.Settings());
 
 
 	private void registerOtherItems()
 	{
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","fibrous_comb"), FIBROUS_COMB));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","cold_comb"), COLD_COMB));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","hot_comb"), HOT_COMB));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","stoney_comb"), STONEY_COMB));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peaty_comb"), PEATY_COMB));
+
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","royal_jelly"),ROYAL_JELLY));
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","pistachio_nut"),PISTACHIO_NUT));
+		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","plum"),PLUM));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
