@@ -1,6 +1,7 @@
 package ace.actually.reforested;
 
 import ace.actually.reforested.bees.blocks.centrifuge.CentrifugeScreen;
+import ace.actually.reforested.industry.block.compartment.CompartmentScreen;
 import ace.actually.reforested.industry.block.peat_engine.PeatEngineScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -15,6 +16,7 @@ public class ClientInit implements ClientModInitializer {
     public void onInitializeClient() {
         HandledScreens.register(Reforested.CENTRIFUGE_SCREEN_HANDLER, CentrifugeScreen::new);
         HandledScreens.register(Reforested.PEAT_ENGINE_SCREEN_HANDLER, PeatEngineScreen::new);
+        HandledScreens.register(Reforested.COMPARTMENT_SCREEN_HANDLER, CompartmentScreen::new);
 
         for (int i = 0; i < Reforested.WOOD_BLOCKS.size(); i++) {
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).LEAVES, RenderLayer.getTranslucent());
