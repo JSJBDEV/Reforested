@@ -25,7 +25,6 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
@@ -127,7 +126,8 @@ public class Reforested implements ModInitializer {
 	public static final CentrifugeBlock CENTRIFUGE_BLOCK = new CentrifugeBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final TreeCaneBlock TREE_CANE_BLOCK = new TreeCaneBlock(AbstractBlock.Settings.create());
 	public static final PeatEngineBlock PEAT_ENGINE_BLOCK = new PeatEngineBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
-	public static final CompartmentBlock COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
+	public static final CompartmentBlock BASIC_COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
+	public static final CompartmentBlock INT_COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.copy(Blocks.MUD).ticksRandomly());
 	private void registerOtherBlocks()
 	{
@@ -135,7 +135,8 @@ public class Reforested implements ModInitializer {
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","centrifuge"),CENTRIFUGE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","tree_cane"),TREE_CANE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","peat_engine"),PEAT_ENGINE_BLOCK);
-		Registry.register(Registries.BLOCK,Identifier.of("reforested","compartment"),COMPARTMENT_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","basic_compartment"), BASIC_COMPARTMENT_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","int_compartment"), INT_COMPARTMENT_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","bog"),BOG_BLOCK);
 	}
 
@@ -148,24 +149,30 @@ public class Reforested implements ModInitializer {
 
 
 	}
+	public static HashMap<Block,Integer> COMPARTMENT_BLOCK_TO_TABS = new HashMap<>();
+	static
+	{
+		COMPARTMENT_BLOCK_TO_TABS.put(Reforested.BASIC_COMPARTMENT_BLOCK,2);
+		COMPARTMENT_BLOCK_TO_TABS.put(Reforested.INT_COMPARTMENT_BLOCK,3);
+	}
 
 
 	public static BlockEntityType<CentrifugeBlockEntity> CENTRIFUGE_BLOCK_ENTITY = Registry.register(
 			Registries.BLOCK_ENTITY_TYPE,
 			Identifier.of("reforested", "centrifuge_block_entity"),
-			FabricBlockEntityTypeBuilder.create(CentrifugeBlockEntity::new, CENTRIFUGE_BLOCK).build()
+			BlockEntityType.Builder.create(CentrifugeBlockEntity::new, CENTRIFUGE_BLOCK).build()
 	);
 
 	public static BlockEntityType<PeatEngineBlockEntity> PEAT_ENGINE_BLOCK_ENTITY = Registry.register(
 			Registries.BLOCK_ENTITY_TYPE,
 			Identifier.of("reforested", "peat_engine_block_entity"),
-			FabricBlockEntityTypeBuilder.create(PeatEngineBlockEntity::new, PEAT_ENGINE_BLOCK).build()
+			BlockEntityType.Builder.create(PeatEngineBlockEntity::new, PEAT_ENGINE_BLOCK).build()
 	);
 
 	public static BlockEntityType<CompartmentBlockEntity> COMPARTMENT_BLOCK_ENTITY = Registry.register(
 			Registries.BLOCK_ENTITY_TYPE,
 			Identifier.of("reforested", "compartment_block_entity"),
-			FabricBlockEntityTypeBuilder.create(CompartmentBlockEntity::new, COMPARTMENT_BLOCK).build()
+			BlockEntityType.Builder.create(CompartmentBlockEntity::new, COMPARTMENT_BLOCK_TO_TABS.keySet().toArray(new Block[0])).build()
 	);
 
 	public static BlockEntityType<ModdedSignBlockEntity> MODDED_SIGN_BLOCK_ENTITY;
@@ -234,6 +241,10 @@ public class Reforested implements ModInitializer {
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat_engine"),new BlockItem(PEAT_ENGINE_BLOCK,new Item.Settings())));
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","tree_cane"),new BlockItem(TREE_CANE_BLOCK,new Item.Settings())));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bog"),new BlockItem(BOG_BLOCK,new Item.Settings())));
+
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","basic_compartment"),new BlockItem(BASIC_COMPARTMENT_BLOCK,new Item.Settings())));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","int_compartment"),new BlockItem(INT_COMPARTMENT_BLOCK,new Item.Settings())));
+
 	}
 
 	public static ExtendedScreenHandlerType<CentrifugeScreenHandler, ProgressData> CENTRIFUGE_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(CentrifugeScreenHandler::new, ProgressData.PACKET_CODEC);

@@ -27,39 +27,49 @@ public class CompartmentScreenHandler extends ScreenHandler {
 
     public CompartmentScreenHandler(int i, PlayerInventory playerInventory, ProgressData progressData)
     {
-        this(i,playerInventory, new SimpleInventory(54));
+        this(i,playerInventory, new SimpleInventory(progressData.label().getInt("tabCount")*27));
         label=progressData.label();
+
+
+
     }
 
     //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
     //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
     public CompartmentScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(Reforested.COMPARTMENT_SCREEN_HANDLER, syncId);
-        checkSize(inventory, 54);
+        checkSize(inventory, 27);
         this.inventory = inventory;
         //some inventories do custom logic when a player opens it.
         inventory.onOpen(playerInventory.player);
+        System.out.println(this.inventory.size());
+
 
         int m;
         int l;
         int v = 0;
 
-        //Our inventory
+
+        //first tab
         for (m = 0; m < 3; ++m) {
             for (l = 0; l < 9; ++l) {
                 this.addSlot(new DisablableSlot(inventory, v, 8 + l * 18, 18 + m * 18));
                 v++;
             }
         }
-        //tab 2
-        for (m = 0; m < 3; ++m) {
-            for (l = 0; l < 9; ++l) {
-                DisablableSlot slot = new DisablableSlot(inventory, v, 8 + l * 18, 18 + m * 18);
-                slot.enableSlot(false);
-                this.addSlot(slot);
-                v++;
+
+        //extra tabs
+        for (int tabs = 1; tabs < inventory.size()/27; tabs++) {
+            for (m = 0; m < 3; ++m) {
+                for (l = 0; l < 9; ++l) {
+                    DisablableSlot slot = new DisablableSlot(inventory, v, 8 + l * 18, 18 + m * 18);
+                    slot.enableSlot(false);
+                    this.addSlot(slot);
+                    v++;
+                }
             }
         }
+
         //The player inventory
         for (m = 0; m < 3; ++m) {
             for (l = 0; l < 9; ++l) {
@@ -70,7 +80,6 @@ public class CompartmentScreenHandler extends ScreenHandler {
         for (m = 0; m < 9; ++m) {
             this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
-
     }
 
 

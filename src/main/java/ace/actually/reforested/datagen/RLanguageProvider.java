@@ -57,6 +57,8 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Reforested.PISTACHIO_NUT,"Pistachio Nut");
         translationBuilder.add(Reforested.PLUM,"Plum");
         translationBuilder.add(Reforested.TREE_CANE_BLOCK,"Tree Breeding Canes");
+        translationBuilder.add(Reforested.BASIC_COMPARTMENT_BLOCK,"Basic Compartment");
+        translationBuilder.add(Reforested.INT_COMPARTMENT_BLOCK,"Intermediate Compartment");
 
         for(String bee: BeeLookups.BEE_TYPES)
         {

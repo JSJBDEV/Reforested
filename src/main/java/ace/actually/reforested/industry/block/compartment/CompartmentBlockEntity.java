@@ -22,14 +22,16 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import team.reborn.energy.api.base.SimpleEnergyStorage;
 
 public class CompartmentBlockEntity extends BlockEntity implements GenericInventory, ExtendedScreenHandlerFactory<ProgressData> {
+
+
+
     public CompartmentBlockEntity(BlockPos pos, BlockState state) {
         super(Reforested.COMPARTMENT_BLOCK_ENTITY, pos, state);
     }
 
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(54, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(27*Reforested.COMPARTMENT_BLOCK_TO_TABS.get(getCachedState().getBlock()), ItemStack.EMPTY);
 
 
     @Override
@@ -84,9 +86,7 @@ public class CompartmentBlockEntity extends BlockEntity implements GenericInvent
     @Override
     public ProgressData getScreenOpeningData(ServerPlayerEntity player) {
         NbtCompound v = new NbtCompound();
-        v.putInt("x",pos.getX());
-        v.putInt("y",pos.getY());
-        v.putInt("z",pos.getZ());
+        v.putInt("tabCount",Reforested.COMPARTMENT_BLOCK_TO_TABS.get(getCachedState().getBlock()));
         return new ProgressData(v);
     }
 

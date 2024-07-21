@@ -28,17 +28,6 @@ public class CompartmentBlock extends Block implements BlockEntityProvider {
         super(settings);
     }
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder.add(Properties.FACING));
-    }
-
-    @Nullable
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return super.getPlacementState(ctx).with(Properties.FACING,ctx.getPlayerLookDirection());
-    }
-
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -47,7 +36,7 @@ public class CompartmentBlock extends Block implements BlockEntityProvider {
 
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return Block.createCuboidShape(2,2,2,14,14,14);
+        return Block.createCuboidShape(2,0,2,14,15,14);
     }
 
     @Override
