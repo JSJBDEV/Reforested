@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:chest"
+    },
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "O": {
+      "item": "minecraft:writable_book"
+    },
+    "A": {
+      "item": "minecraft:andesite"
+    }
+  },
+  "pattern": [
+    "PBP",
+    "ASA",
+    "POP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:basic_compartment"
+  }
+}

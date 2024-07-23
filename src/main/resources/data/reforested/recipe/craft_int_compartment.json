@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "reforested:basic_compartment"
+    },
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "O": {
+      "item": "minecraft:writable_book"
+    }
+  },
+  "pattern": [
+    "PBP",
+    "PSP",
+    "POP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:int_compartment"
+  }
+}

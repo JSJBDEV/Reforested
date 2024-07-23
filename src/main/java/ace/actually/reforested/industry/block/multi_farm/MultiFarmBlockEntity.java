@@ -1,10 +1,12 @@
-package ace.actually.reforested.industry.block.peat_engine;
+package ace.actually.reforested.industry.block.multi_farm;
 
 import ace.actually.reforested.Reforested;
+import ace.actually.reforested.bees.blocks.ApiaryBlock;
 import ace.actually.reforested.bees.blocks.GenericInventory;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,37 +22,36 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import team.reborn.energy.api.EnergyStorage;
-import team.reborn.energy.api.EnergyStorageUtil;
 import team.reborn.energy.api.base.SimpleEnergyStorage;
 
-public class PeatEngineBlockEntity extends BlockEntity implements GenericInventory, ExtendedScreenHandlerFactory<ProgressData> {
-    public PeatEngineBlockEntity(BlockPos pos, BlockState state) {
-        super(Reforested.PEAT_ENGINE_BLOCK_ENTITY, pos, state);
+import java.sql.Ref;
+
+public class MultiFarmBlockEntity extends BlockEntity implements GenericInventory, ExtendedScreenHandlerFactory<ProgressData> {
+    public MultiFarmBlockEntity(BlockPos pos, BlockState state) {
+        super(Reforested.MULTIFARM_BLOCK_ENTITY, pos, state);
     }
 
-    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 0,100) {
+    public final SimpleEnergyStorage energyStorage = new SimpleEnergyStorage(1000, 100,0) {
         @Override
         protected void onFinalCommit() {
             markDirty();
         }
     };
 
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(10, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(19, ItemStack.EMPTY);
 
 
     @Override
     public Text getDisplayName() {
-        return Text.of("Peat-Fired Engine");
+        return Text.of("Multi Farm");
     }
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new PeatEngineScreenHandler(syncId, playerInventory, this);
+        return new MultiFarmScreenHandler(syncId, playerInventory, this);
     }
 
     @Override
@@ -83,30 +84,35 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
         Inventories.readNbt(nbt, this.inventory, registryLookup);
     }
 
-    public static void tick(World world, BlockPos pos, BlockState state, PeatEngineBlockEntity be) {
-        if(be.ticksToComplete<1 && be.inventory.getFirst().isOf(Reforested.PEAT))
-        {
-            be.inventory.getFirst().decrement(1);
-            be.setTicksToComplete(1000);
+    public static void tick(World world, BlockPos pos, BlockState state, MultiFarmBlockEntity be) {
+        be.tickPlan();
 
+    }
+
+    public void tickPlan()
+    {
+        for (int i = 1; i < 5; i++) {
+            for (int j = -(i-1); j <= (i-1); j++) {
+                world.setBlockState(pos.add(i,0,j), Blocks.BAMBOO_PLANKS.getDefaultState());
+            }
         }
-        if(be.ticksToComplete>0)
-        {
-            be.energyStorage.amount+=6;
-            be.setTicksToComplete(be.getTicksToComplete()-1);
+        for (int i = 1; i < 5; i++) {
+            for (int j = -(i-1); j <= (i-1); j++) {
+                world.setBlockState(pos.add(-i,0,j), Blocks.OAK_PLANKS.getDefaultState());
+            }
         }
-        for(Direction direction: Direction.values())
-        {
-            EnergyStorage storage = EnergyStorage.SIDED.find(world,pos.offset(direction),direction.getOpposite());
-            if(storage!=null)
-            {
-                EnergyStorageUtil.move(be.energyStorage,storage,Long.MAX_VALUE,null);
+        for (int i = 1; i < 5; i++) {
+            for (int j = -(i-1); j <= (i-1); j++) {
+                world.setBlockState(pos.add(j,0,-i), Blocks.BIRCH_PLANKS.getDefaultState());
+            }
+        }
+        for (int i = 1; i < 5; i++) {
+            for (int j = -(i-1); j <= (i-1); j++) {
+                world.setBlockState(pos.add(-j,0,i), Blocks.JUNGLE_PLANKS.getDefaultState());
             }
         }
 
     }
-
-
 
 
     @Override

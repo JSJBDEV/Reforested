@@ -6,12 +6,16 @@ import ace.actually.reforested.bees.blocks.centrifuge.*;
 import ace.actually.reforested.industry.block.compartment.CompartmentBlock;
 import ace.actually.reforested.industry.block.compartment.CompartmentBlockEntity;
 import ace.actually.reforested.industry.block.compartment.CompartmentScreenHandler;
+import ace.actually.reforested.industry.block.multi_farm.MultiFarmBlock;
+import ace.actually.reforested.industry.block.multi_farm.MultiFarmBlockEntity;
+import ace.actually.reforested.industry.block.multi_farm.MultiFarmScreenHandler;
 import ace.actually.reforested.industry.block.peat_engine.BogBlock;
 import ace.actually.reforested.industry.block.peat_engine.PeatEngineBlock;
 import ace.actually.reforested.industry.block.peat_engine.PeatEngineBlockEntity;
 import ace.actually.reforested.industry.block.peat_engine.PeatEngineScreenHandler;
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.datagen.RLootProvider;
+import ace.actually.reforested.industry.item.SolderingIronItem;
 import ace.actually.reforested.trees.blocks.tree_breeding.TreeBreedingRecipes;
 import ace.actually.reforested.trees.blocks.tree_breeding.TreeCaneBlock;
 import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
@@ -129,6 +133,7 @@ public class Reforested implements ModInitializer {
 	public static final CompartmentBlock BASIC_COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final CompartmentBlock INT_COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.copy(Blocks.MUD).ticksRandomly());
+	public static final MultiFarmBlock MULTI_FARM_BLOCK = new MultiFarmBlock(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK));
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
@@ -138,6 +143,7 @@ public class Reforested implements ModInitializer {
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","basic_compartment"), BASIC_COMPARTMENT_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","int_compartment"), INT_COMPARTMENT_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","bog"),BOG_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","multi_farm"),MULTI_FARM_BLOCK);
 	}
 
 	public static List<Block> ADD_BEEHIVE = new ArrayList<>();
@@ -175,6 +181,12 @@ public class Reforested implements ModInitializer {
 			BlockEntityType.Builder.create(CompartmentBlockEntity::new, COMPARTMENT_BLOCK_TO_TABS.keySet().toArray(new Block[0])).build()
 	);
 
+	public static BlockEntityType<MultiFarmBlockEntity> MULTIFARM_BLOCK_ENTITY = Registry.register(
+			Registries.BLOCK_ENTITY_TYPE,
+			Identifier.of("reforested", "multi_farm_block_entity"),
+			BlockEntityType.Builder.create(MultiFarmBlockEntity::new, MULTI_FARM_BLOCK).build()
+	);
+
 	public static BlockEntityType<ModdedSignBlockEntity> MODDED_SIGN_BLOCK_ENTITY;
 	public static BlockEntityType<ModdedHangingSignBlockEntity> MODDED_HANGING_SIGN_BLOCK_ENTITY;
 
@@ -203,6 +215,7 @@ public class Reforested implements ModInitializer {
 				BlockEntityType.Builder.create(ModdedHangingSignBlockEntity::new, allHangingWoodSigns.toArray(new Block[]{})).build());
 
 		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, CENTRIFUGE_BLOCK_ENTITY);
+		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, MULTIFARM_BLOCK_ENTITY);
 		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, PEAT_ENGINE_BLOCK_ENTITY);
 
 	}
@@ -219,6 +232,8 @@ public class Reforested implements ModInitializer {
 	public static final Item PEAT = new Item(new Item.Settings());
 	public static final Item ROYAL_JELLY = new HoneyBottleItem(new Item.Settings());
 	public static final Item PLUM = new Item(new Item.Settings());
+	public static final SolderingIronItem SOLDERING_IRON = new SolderingIronItem(new Item.Settings());
+	public static final Item CIRCUIT_BOARD = new Item(new Item.Settings());
 
 
 	private void registerOtherItems()
@@ -235,6 +250,8 @@ public class Reforested implements ModInitializer {
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","pistachio_nut"),PISTACHIO_NUT));
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","plum"),PLUM));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","soldering_iron"),SOLDERING_IRON));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","circuit_board"),CIRCUIT_BOARD));
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));
@@ -244,18 +261,21 @@ public class Reforested implements ModInitializer {
 
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","basic_compartment"),new BlockItem(BASIC_COMPARTMENT_BLOCK,new Item.Settings())));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","int_compartment"),new BlockItem(INT_COMPARTMENT_BLOCK,new Item.Settings())));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","multi_farm"),new BlockItem(MULTI_FARM_BLOCK,new Item.Settings())));
 
 	}
 
 	public static ExtendedScreenHandlerType<CentrifugeScreenHandler, ProgressData> CENTRIFUGE_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(CentrifugeScreenHandler::new, ProgressData.PACKET_CODEC);
 	public static ExtendedScreenHandlerType<PeatEngineScreenHandler, ProgressData> PEAT_ENGINE_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(PeatEngineScreenHandler::new, ProgressData.PACKET_CODEC);
 	public static ExtendedScreenHandlerType<CompartmentScreenHandler, ProgressData> COMPARTMENT_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(CompartmentScreenHandler::new, ProgressData.PACKET_CODEC);
+	public static ExtendedScreenHandlerType<MultiFarmScreenHandler, ProgressData> MULTI_FARM_SCREEN_HANDLER =  new ExtendedScreenHandlerType<>(MultiFarmScreenHandler::new, ProgressData.PACKET_CODEC);
 
 	static
 	{
 		CENTRIFUGE_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","centrifuge_screen_handler"),CENTRIFUGE_SCREEN_HANDLER);
 		PEAT_ENGINE_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","peat_engine_screen_handler"),PEAT_ENGINE_SCREEN_HANDLER);
 		COMPARTMENT_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","compartment_screen_handler"),COMPARTMENT_SCREEN_HANDLER);
+		MULTI_FARM_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","multi_farm_screen_handler"),MULTI_FARM_SCREEN_HANDLER);
 
 	}
 
