@@ -25,6 +25,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import team.reborn.energy.api.EnergyStorage;
 
+/**
+ * an engine powered by peat, from block o' bog blocks.
+ */
 public class PeatEngineBlock extends Block implements BlockEntityProvider {
     public PeatEngineBlock(Settings settings) {
         super(settings);

@@ -62,6 +62,7 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Reforested.MULTI_FARM_BLOCK,"Multi-Farm");
         translationBuilder.add(Reforested.CIRCUIT_BOARD,"Circuit Board");
         translationBuilder.add(Reforested.SOLDERING_IRON,"Soldering Iron");
+        translationBuilder.add(Reforested.COPPER_GEAR,"Copper Gear");
 
         for(String bee: BeeLookups.BEE_TYPES)
         {

@@ -10,6 +10,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
+/**
+ * stateful tree breeding huh.
+ * when a sapling ticks, it has a chance to turn into another sapling
+ * TODO: this probably needs some other kind of tracking so saplings can't be just broken and replaced, or not.
+ */
 public class TreeCaneBlock extends Block {
     public TreeCaneBlock(Settings settings) {
         super(settings);

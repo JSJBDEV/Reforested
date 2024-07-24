@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "reforested:larch_planks"
+    },
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "I":
+    {
+      "item": "minecraft:iron_block"
+    },
+    "G":
+    {
+      "item": "reforested:copper_gear"
+    }
+  },
+  "pattern": [
+    "PGP",
+    " C ",
+    "PIP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:tree_cane"
+  }
+}

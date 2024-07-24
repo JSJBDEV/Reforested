@@ -20,6 +20,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * a farm that can deal with crops and with saplings
+ */
 public class MultiFarmBlock extends Block implements BlockEntityProvider {
     public MultiFarmBlock(Settings settings) {
         super(settings);

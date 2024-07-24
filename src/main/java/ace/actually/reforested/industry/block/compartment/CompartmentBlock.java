@@ -23,6 +23,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * chests with tabs and a search bar
+ */
 public class CompartmentBlock extends Block implements BlockEntityProvider {
     public CompartmentBlock(Settings settings) {
         super(settings);

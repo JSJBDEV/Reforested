@@ -234,6 +234,7 @@ public class Reforested implements ModInitializer {
 	public static final Item PLUM = new Item(new Item.Settings());
 	public static final SolderingIronItem SOLDERING_IRON = new SolderingIronItem(new Item.Settings());
 	public static final Item CIRCUIT_BOARD = new Item(new Item.Settings());
+	public static final Item COPPER_GEAR = new Item(new Item.Settings());
 
 
 	private void registerOtherItems()
@@ -252,6 +253,7 @@ public class Reforested implements ModInitializer {
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","soldering_iron"),SOLDERING_IRON));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","circuit_board"),CIRCUIT_BOARD));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","copper_gear"),COPPER_GEAR));
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));

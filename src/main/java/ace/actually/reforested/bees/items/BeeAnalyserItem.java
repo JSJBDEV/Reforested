@@ -12,6 +12,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
+/**
+ * It analyses bees, giving you information on what they do
+ */
 public class BeeAnalyserItem extends Item {
     public BeeAnalyserItem(Settings settings) {
         super(settings);
@@ -28,11 +31,5 @@ public class BeeAnalyserItem extends Item {
             user.sendMessage(Text.translatable("text.reforested.bee.natural").append(" "+BeeLookups.NATURAL_BEE_TYPES.contains(bee.reforested$getBeeType())));
         }
         return super.useOnEntity(stack, user, entity, hand);
-    }
-
-    @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        RVibeBasedTexturer.makeTexture(RVibeBasedTexturer.BLOCK_PATH+"larch_planks.png",RVibeBasedTexturer.BLOCK_PATH+"wenge_planks.png",0,5,0);
-        return super.useOnBlock(context);
     }
 }

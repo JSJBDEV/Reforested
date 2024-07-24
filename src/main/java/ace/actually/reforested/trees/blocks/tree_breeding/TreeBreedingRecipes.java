@@ -16,6 +16,8 @@ public class TreeBreedingRecipes {
         RECIPES.add(new TreeBreedingPair(Registries.BLOCK.get(Identifier.of("reforested","pink_ivory_sapling")),Blocks.CHERRY_SAPLING,Blocks.ACACIA_SAPLING,0.3f));
         RECIPES.add(new TreeBreedingPair(Registries.BLOCK.get(Identifier.of("reforested","abura_sapling")),Blocks.OAK_SAPLING,Blocks.JUNGLE_SAPLING,0.3f));
         RECIPES.add(new TreeBreedingPair(Registries.BLOCK.get(Identifier.of("reforested","plum_sapling")),Blocks.CHERRY_SAPLING,Blocks.DARK_OAK_SAPLING,0.3f));
+        RECIPES.add(new TreeBreedingPair(Registries.BLOCK.get(Identifier.of("reforested","rosewood_sapling")),Blocks.CHERRY_SAPLING,Registries.BLOCK.get(Identifier.of("reforested","pink_ivory_sapling")),0.3f));
+        RECIPES.add(new TreeBreedingPair(Registries.BLOCK.get(Identifier.of("reforested","pistachio_sapling")),Blocks.JUNGLE_SAPLING,Registries.BLOCK.get(Identifier.of("reforested","plum_sapling")),0.3f));
 
     }
 

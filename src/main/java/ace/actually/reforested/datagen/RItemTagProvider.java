@@ -40,6 +40,7 @@ public class RItemTagProvider extends FabricTagProvider.ItemTagProvider {
             this.getTagBuilder(ItemTags.SIGNS).add(Registries.ITEM.getId(builder.SIGN_ITEM.asItem()));
             this.getTagBuilder(ItemTags.WOODEN_TRAPDOORS).add(Registries.ITEM.getId(builder.TRAPDOOR.asItem()));
             this.getTagBuilder(ItemTags.HANGING_SIGNS).add(Registries.ITEM.getId(builder.HANGING_SIGN_ITEM));
+            this.getTagBuilder(ItemTags.SAPLINGS).add(Registries.ITEM.getId(builder.SAPLING.asItem()));
 
         }
     }
