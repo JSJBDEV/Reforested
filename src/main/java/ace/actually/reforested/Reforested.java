@@ -38,6 +38,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -77,7 +78,6 @@ public class Reforested implements ModInitializer {
 			.icon(() -> new ItemStack(Reforested.PEAT_ENGINE_BLOCK))
 			.displayName(Text.translatable("itemgroup.reforested.industry"))
 			.build();
-
 
 
 	@Override

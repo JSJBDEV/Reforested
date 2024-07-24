@@ -35,6 +35,11 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
         protected void onFinalCommit() {
             markDirty();
         }
+
+        @Override
+        public boolean supportsInsertion() {
+            return true;
+        }
     };
 
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(10, ItemStack.EMPTY);
@@ -70,6 +75,7 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         nbt.putInt("percentageComplete", ticksToComplete);
+        nbt.putLong("energy",energyStorage.amount);
         super.writeNbt(nbt, registryLookup);
         Inventories.writeNbt(nbt, this.inventory,registryLookup);
     }
@@ -79,6 +85,7 @@ public class CentrifugeBlockEntity extends BlockEntity implements GenericInvento
         super.readNbt(nbt, registryLookup);
         ticksToComplete =nbt.getInt("percentageComplete");
         Inventories.readNbt(nbt, this.inventory, registryLookup);
+        energyStorage.amount=nbt.getLong("energy");
     }
 
     public static void tick(World world, BlockPos pos, BlockState state, CentrifugeBlockEntity be) {

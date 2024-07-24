@@ -18,10 +18,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import team.reborn.energy.api.EnergyStorage;
 
 public class PeatEngineBlock extends Block implements BlockEntityProvider {
     public PeatEngineBlock(Settings settings) {
@@ -36,6 +38,14 @@ public class PeatEngineBlock extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
+        for(Direction direction: Direction.values())
+        {
+            EnergyStorage storage = EnergyStorage.SIDED.find(ctx.getWorld(),ctx.getBlockPos().offset(direction),direction.getOpposite());
+            if(storage!=null && storage.supportsInsertion())
+            {
+                return super.getPlacementState(ctx).with(Properties.FACING,direction);
+            }
+        }
         return super.getPlacementState(ctx).with(Properties.FACING,ctx.getPlayerLookDirection());
     }
 

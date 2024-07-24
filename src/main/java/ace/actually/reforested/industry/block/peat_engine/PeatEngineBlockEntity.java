@@ -72,6 +72,7 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         nbt.putInt("percentageComplete", ticksToComplete);
+        nbt.putLong("energy",energyStorage.amount);
         super.writeNbt(nbt, registryLookup);
         Inventories.writeNbt(nbt, this.inventory,registryLookup);
     }
@@ -80,6 +81,7 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
     protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.readNbt(nbt, registryLookup);
         ticksToComplete =nbt.getInt("percentageComplete");
+        energyStorage.amount=nbt.getLong("energy");
         Inventories.readNbt(nbt, this.inventory, registryLookup);
     }
 
