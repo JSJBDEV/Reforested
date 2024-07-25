@@ -3,16 +3,16 @@
 	"id": "reforested",
 	"version": "${version}",
 	"name": "Reforested",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod all about forestry",
 	"authors": [
-		"Me!"
+		"Acrogenous"
 	],
 	"accessWidener" : "poi.accesswidener",
 	"contact": {
 		"homepage": "https://fabricmc.net/",
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/reforested/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -22,7 +22,9 @@
 		"fabric-datagen": [
 			"ace.actually.reforested.ReforestedDataGenerator"
 		],
-		"client": ["ace.actually.reforested.ClientInit"],
+		"client": [
+			"ace.actually.reforested.ClientInit"
+		],
 		"mm:early_risers": [
 			{
 				"value": "ace.actually.reforested.RisingEarly"
