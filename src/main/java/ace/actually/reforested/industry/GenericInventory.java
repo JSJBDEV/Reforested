@@ -1,4 +1,4 @@
-package ace.actually.reforested.bees.blocks;
+package ace.actually.reforested.industry;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;

@@ -31,8 +31,9 @@ public class PeatEngineScreen extends HandledScreen<PeatEngineScreenHandler> {
         PeatEngineBlockEntity be = (PeatEngineBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos);
         if(be.getTicksToComplete()!=-1)
         {
-            context.drawText(textRenderer,be.getTicksToComplete()+"",(width/2)-25,100, Colors.WHITE,true);
+            context.drawText(textRenderer,Text.translatable("text.reforested.engine.burn_time").append(": "+be.getTicksToComplete()),(width/2)-35,height/4+10, Colors.WHITE,true);
         }
+        context.drawText(textRenderer,Text.translatable("text.reforested.engine.energy").append(": "+be.energyStorage.amount),(width/2)-35,height/4 +20, Colors.WHITE,true);
 
     }
 

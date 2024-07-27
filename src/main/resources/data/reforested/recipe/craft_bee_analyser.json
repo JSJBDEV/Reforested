@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "C": {
+      "item": "reforested:copper_gear"
+    },
+    "R":
+    {
+      "item": "minecraft:redstone"
+    },
+    "L":
+    {
+      "item": "minecraft:clock"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " C ",
+    "RLR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:bee_analyser"
+  }
+}

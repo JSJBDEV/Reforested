@@ -1,7 +1,7 @@
 package ace.actually.reforested.industry.block.peat_engine;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.bees.blocks.GenericInventory;
+import ace.actually.reforested.industry.GenericInventory;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
@@ -94,7 +94,10 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
         }
         if(be.ticksToComplete>0)
         {
-            be.energyStorage.amount+=6;
+            if(be.energyStorage.capacity>be.energyStorage.amount)
+            {
+                be.energyStorage.amount+=6;
+            }
             be.setTicksToComplete(be.getTicksToComplete()-1);
         }
         for(Direction direction: Direction.values())

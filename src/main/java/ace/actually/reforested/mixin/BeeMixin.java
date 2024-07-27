@@ -1,23 +1,31 @@
 package ace.actually.reforested.mixin;
 
+import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.BeeLookups;
 import ace.actually.reforested.bees.IReforestedBee;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Why we need this mixin:
@@ -28,6 +36,8 @@ import java.io.IOException;
  */
 @Mixin(BeeEntity.class)
 public abstract class BeeMixin extends AnimalEntity implements IReforestedBee {
+
+    @Shadow public abstract boolean isBreedingItem(ItemStack stack);
 
     @Unique
     private static final TrackedData<String> reforested$BEE_TYPE
@@ -79,6 +89,29 @@ public abstract class BeeMixin extends AnimalEntity implements IReforestedBee {
            markEffectsDirty();
        }
 
+    }
+
+    @Inject(method = "setAngryAt", at = @At("HEAD"), cancellable = true)
+    public void angery(UUID angryAt, CallbackInfo ci) {
+        if(getEntityWorld() instanceof ServerWorld serverWorld)
+        {
+            if(serverWorld.getEntity(angryAt) instanceof PlayerEntity player)
+            {
+                if(player.getEquippedStack(EquipmentSlot.HEAD).isOf(Reforested.APIARISTS_HAT))
+                {
+                    if(player.getEquippedStack(EquipmentSlot.CHEST).isOf(Reforested.APIARISTS_JACKET))
+                    {
+                        if(player.getEquippedStack(EquipmentSlot.LEGS).isOf(Reforested.APIARISTS_PANTS))
+                        {
+                            if(player.getEquippedStack(EquipmentSlot.FEET).isOf(Reforested.APIARISTS_SHOES))
+                            {
+                                ci.cancel();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

@@ -27,6 +27,7 @@ public class InformationScreen extends Screen {
         PAGES.put("Multi Farm","information.reforested.multi_farm");
         PAGES.put("Peat","information.reforested.peat");
         PAGES.put("Centrifuge","information.reforested.centrifuge");
+        PAGES.put("Backpacks","information.reforested.backpacks");
     }
     private static HashMap<String,String[]> REFORMATTED_PAGES = new HashMap<>();
 

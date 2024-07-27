@@ -16,6 +16,7 @@ import ace.actually.reforested.industry.block.peat_engine.PeatEngineScreenHandle
 import ace.actually.reforested.bees.items.BeeAnalyserItem;
 import ace.actually.reforested.datagen.RLootProvider;
 import ace.actually.reforested.industry.item.SolderingIronItem;
+import ace.actually.reforested.industry.item.backpack.BackpackItem;
 import ace.actually.reforested.trees.blocks.tree_breeding.TreeBreedingRecipes;
 import ace.actually.reforested.trees.blocks.tree_breeding.TreeCaneBlock;
 import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
@@ -23,6 +24,8 @@ import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedSignBlockEntity;
 import com.google.common.collect.ImmutableSet;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -32,16 +35,21 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.item.*;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.poi.PointOfInterestType;
@@ -79,6 +87,7 @@ public class Reforested implements ModInitializer {
 			.displayName(Text.translatable("itemgroup.reforested.industry"))
 			.build();
 
+	public static final TagKey<Item> DIGGINGS = TagKey.of(RegistryKeys.ITEM,Identifier.of("reforested","diggings"));
 
 	@Override
 	public void onInitialize() {
@@ -122,6 +131,9 @@ public class Reforested implements ModInitializer {
 		{
 			ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(INDUSTRY).get()).register(a->a.add(item));
 		});
+
+
+
 		LOGGER.info("Hello Fabric world!");
 
 	}
@@ -220,6 +232,24 @@ public class Reforested implements ModInitializer {
 
 	}
 
+	public static RegistryEntry.Reference<ArmorMaterial> APIARISTS_MATERIAL = registerApiaristsMaterials();
+	private static RegistryEntry.Reference<ArmorMaterial> registerApiaristsMaterials()
+	{
+		EnumMap enumMap = new EnumMap(ArmorItem.Type.class);
+		enumMap.put(ArmorItem.Type.BOOTS, 1);
+		enumMap.put(ArmorItem.Type.LEGGINGS, 4);
+		enumMap.put(ArmorItem.Type.CHESTPLATE, 5);
+		enumMap.put(ArmorItem.Type.HELMET, 2);
+		enumMap.put(ArmorItem.Type.BODY, 4);
+
+		List<ArmorMaterial.Layer> armourLayers = List.of(new ArmorMaterial.Layer(Identifier.of("reforested","apiarists")));
+
+		 return Registry.registerReference(
+				Registries.ARMOR_MATERIAL,
+				Identifier.of("reforested","apiarists"),
+				new ArmorMaterial(enumMap, 12, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, ()->Ingredient.ofItems(Items.LEATHER), armourLayers, 0, 0));
+	}
+
 
 	public static final BeeAnalyserItem BEE_ANALYSER_ITEM = new BeeAnalyserItem(new Item.Settings());
 	public static final HoneycombItem FIBROUS_COMB = new HoneycombItem(new Item.Settings());
@@ -235,7 +265,13 @@ public class Reforested implements ModInitializer {
 	public static final SolderingIronItem SOLDERING_IRON = new SolderingIronItem(new Item.Settings());
 	public static final Item CIRCUIT_BOARD = new Item(new Item.Settings());
 	public static final Item COPPER_GEAR = new Item(new Item.Settings());
-
+	public static final Item SILK = new Item(new Item.Settings());
+	public static final Item SILK_WEAVE = new Item(new Item.Settings());
+	public static final ArmorItem APIARISTS_HAT = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.HELMET,new Item.Settings());
+	public static final ArmorItem APIARISTS_JACKET = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.CHESTPLATE,new Item.Settings());
+	public static final ArmorItem APIARISTS_PANTS = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.LEGGINGS,new Item.Settings());
+	public static final ArmorItem APIARISTS_SHOES = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.BOOTS,new Item.Settings());
+	public static final BackpackItem BACKPACK_ITEM = new BackpackItem(new Item.Settings(),500);
 
 	private void registerOtherItems()
 	{
@@ -248,12 +284,22 @@ public class Reforested implements ModInitializer {
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","bee_analyser"),BEE_ANALYSER_ITEM));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","propolis"),PROPOLIS));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","royal_jelly"),ROYAL_JELLY));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","silk"),SILK));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","silk_weave"),SILK_WEAVE));
+
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","pistachio_nut"),PISTACHIO_NUT));
 		TREE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","plum"),PLUM));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","peat"),PEAT));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","soldering_iron"),SOLDERING_IRON));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","circuit_board"),CIRCUIT_BOARD));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","copper_gear"),COPPER_GEAR));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","backpack"),BACKPACK_ITEM));
+
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_helmet"),APIARISTS_HAT));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_chestplate"),APIARISTS_JACKET));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_leggings"),APIARISTS_PANTS));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_boots"),APIARISTS_SHOES));
+
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));
@@ -264,6 +310,8 @@ public class Reforested implements ModInitializer {
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","basic_compartment"),new BlockItem(BASIC_COMPARTMENT_BLOCK,new Item.Settings())));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","int_compartment"),new BlockItem(INT_COMPARTMENT_BLOCK,new Item.Settings())));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","multi_farm"),new BlockItem(MULTI_FARM_BLOCK,new Item.Settings())));
+
+
 
 	}
 
@@ -278,8 +326,12 @@ public class Reforested implements ModInitializer {
 		PEAT_ENGINE_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","peat_engine_screen_handler"),PEAT_ENGINE_SCREEN_HANDLER);
 		COMPARTMENT_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","compartment_screen_handler"),COMPARTMENT_SCREEN_HANDLER);
 		MULTI_FARM_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER,Identifier.of("reforested","multi_farm_screen_handler"),MULTI_FARM_SCREEN_HANDLER);
-
 	}
+
+
+	public static final ComponentType<Boolean> BACKPACK_PICKUP_MODE = Registry.register(Registries.DATA_COMPONENT_TYPE,Identifier.of("reforested","backpack_mode"),
+			ComponentType.<Boolean>builder().codec(Codec.BOOL.validate(DataResult::success)).packetCodec((PacketCodecs.BOOL)).build());
+
 
 
 	private void registerOtherThings()

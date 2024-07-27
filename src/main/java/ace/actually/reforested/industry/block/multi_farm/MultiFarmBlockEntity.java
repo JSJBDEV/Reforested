@@ -1,22 +1,19 @@
 package ace.actually.reforested.industry.block.multi_farm;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.bees.blocks.ApiaryBlock;
-import ace.actually.reforested.bees.blocks.GenericInventory;
+import ace.actually.reforested.industry.GenericInventory;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.AliasedBlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -35,7 +32,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import team.reborn.energy.api.base.SimpleEnergyStorage;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 

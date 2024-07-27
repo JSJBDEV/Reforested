@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:beehive"
+    },
+    "B": {
+      "item": "minecraft:glass"
+    },
+    "O": {
+      "item": "reforested:larch_planks"
+    },
+    "A": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "PBP",
+    "ASA",
+    "POP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:apiary"
+  }
+}

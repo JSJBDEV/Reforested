@@ -38,6 +38,8 @@ public class RLanguageProvider extends FabricLanguageProvider {
         }
 
         translationBuilder.add("tag.item.c.honeycombs","Honeycombs");
+        translationBuilder.add("tag.item.c.gears.copper","Copper Gears");
+        translationBuilder.add("tag.item.reforested.diggings","Diggings (Stuff you mine that isn't ore)");
         translationBuilder.add("itemgroup.reforested.trees","Reforested: Arboriculture");
         translationBuilder.add("itemgroup.reforested.bees","Reforested: Apiculture");
         translationBuilder.add("itemgroup.reforested.industry","Reforested: Industria");
@@ -45,6 +47,7 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Reforested.PEAT_ENGINE_BLOCK,"Peat Engine");
         translationBuilder.add(Reforested.PROPOLIS,"Propolis");
         translationBuilder.add(Reforested.PEAT,"Peat");
+        translationBuilder.add(Reforested.SILK,"Silk Strand");
         translationBuilder.add(Reforested.FIBROUS_COMB,"Fibrous Comb");
         translationBuilder.add(Reforested.PEATY_COMB,"Peaty Comb");
         translationBuilder.add(Reforested.STONEY_COMB,"Stoney Comb");
@@ -60,9 +63,17 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add(Reforested.BASIC_COMPARTMENT_BLOCK,"Basic Compartment");
         translationBuilder.add(Reforested.INT_COMPARTMENT_BLOCK,"Intermediate Compartment");
         translationBuilder.add(Reforested.MULTI_FARM_BLOCK,"Multi-Farm");
-        translationBuilder.add(Reforested.CIRCUIT_BOARD,"Circuit Board");
-        translationBuilder.add(Reforested.SOLDERING_IRON,"Soldering Iron");
+        translationBuilder.add(Reforested.CIRCUIT_BOARD,"Circuit Board (NYI)");
+        translationBuilder.add(Reforested.SOLDERING_IRON,"Soldering Iron (NYI)");
         translationBuilder.add(Reforested.COPPER_GEAR,"Copper Gear");
+        translationBuilder.add(Reforested.BACKPACK_ITEM,"Digger's Backpack");
+        translationBuilder.add(Reforested.SILK_WEAVE,"Silk Weave");
+
+        translationBuilder.add(Reforested.APIARISTS_HAT,"Apiarists Hat");
+        translationBuilder.add(Reforested.APIARISTS_JACKET,"Apiarists Jacket");
+        translationBuilder.add(Reforested.APIARISTS_PANTS,"Apiarists Pants");
+        translationBuilder.add(Reforested.APIARISTS_SHOES,"Apiarists Shoes");
+
 
         for(String bee: BeeLookups.BEE_TYPES)
         {
@@ -78,18 +89,23 @@ public class RLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("category.reforested","Reforested");
         translationBuilder.add("key.reforested.consider","Open information about Reforested");
 
+        translationBuilder.add("text.reforested.backpack.mode","Backpack in pickup mode");
+        translationBuilder.add("text.reforested.backpack.max","Approximate max storage per item");
 
         translationBuilder.add("text.reforested.typeof","This is a ");
         translationBuilder.add("text.reforested.bee.temperature","Preferred Temperature: ");
         translationBuilder.add("text.reforested.bee.humidity","Likes Humidity: ");
         translationBuilder.add("text.reforested.bee.natural","Is Natural: ");
 
-        translationBuilder.add("information.reforested.bees","Bees are neat. \n - \n Around the world, ask you would expect in vanilla you will find hives, these hives no longer contain normal minecraft bees but special Reforested variants, they have working conditions that need to be met, but some bees can produce fascinating things in their combs (you need a centrifuge to process combs) and honey; to get at this new stuff, you will need your bees to be in an apiary \n - \n two bees may breed if they are in a hive with a free space");
+        translationBuilder.add("text.reforested.engine.burn_time","Burn Time Left");
+        translationBuilder.add("text.reforested.engine.energy","Current Energy");
+
+        translationBuilder.add("information.reforested.bees","Bees are neat. \n - \n Around the world, ask you would expect in vanilla you will find hives, these hives no longer contain normal minecraft bees but special Reforested variants, they have working conditions that need to be met, but some bees can produce fascinating things in their combs (you need a centrifuge to process combs) and honey; to get at this new stuff, you will need your bees to be in an apiary \n - \n two bees may breed if they are in a hive with a free space and if you struggle with angering them, craft a set of apiarists gear with silk (from fibrous combs)!");
         translationBuilder.add("information.reforested.trees","Tree breeding is one of the core tenants of Reforested \n - \n To start you will need to craft yourself some Tree Canes and place them with two saplings either side of them, after some time, before the sapling grows into a tree, one of the saplings may mutate into another type of sapling");
         translationBuilder.add("information.reforested.compartments","Compartments are a bit like chests, but they have tabs so you can organise your stuff more adequately and a search bar so you can find the stuff you supposedly organised, one other advantage of compartments is you can just shift-click items into them and they will go into the next available slot in any tab (starting from tab 1) which is pretty neat \n - \n Think of them as early/mid game organisation");
         translationBuilder.add("information.reforested.multi_farm","The Multi-Farm is block that can be used to plant and harvest saplings and crops \n - \n the farm will collect any items around it and replant as it receives things to do so, it requires power to function, and you are probably best off making 2 peat-fired engines for this");
         translationBuilder.add("information.reforested.peat","Peat is an item used in peat-fired engines to make power, it is obtained by placing Block o' Bog near water and waiting until it matures");
         translationBuilder.add("information.reforested.centrifuge","The centrifuge is an industry book that has 1 input and 9 outputs, it is mainly used to process combs into their constituent parts. The block requires a small amount of power to function, so only 1 peat-fired engine is needed to maintain it");
-
+        translationBuilder.add("information.reforested.backpacks","using fairly basic materials you can craft a Digger's Backpack, it does not have a screen of its own but if it's in pickup mode (activated by shift-using it) it will automagically pick up any cobble sand or gravel a put it inside, up to 500 items per type. It will only take in items not on your hotbar, and you can place all the items in the backpack into an inventory by shift-using it on a chest, a barrel or anything with storage slots");
     }
 }

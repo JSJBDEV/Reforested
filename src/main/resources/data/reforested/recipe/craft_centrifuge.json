@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "P": {
-      "item": "reforested:larch_planks"
+      "item": "minecraft:copper_block"
     },
     "C": {
-      "item": "minecraft:comparator"
+      "item": "reforested:copper_gear"
     },
     "I":
     {
@@ -14,7 +14,7 @@
     },
     "G":
     {
-      "item": "reforested:copper_gear"
+      "item": "minecraft:clock"
     }
   },
   "pattern": [
@@ -24,6 +24,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "reforested:multi_farm"
+    "id": "reforested:centrifuge"
   }
 }

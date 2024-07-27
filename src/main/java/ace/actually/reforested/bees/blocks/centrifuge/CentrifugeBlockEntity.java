@@ -2,7 +2,7 @@ package ace.actually.reforested.bees.blocks.centrifuge;
 
 import ace.actually.reforested.Reforested;
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
-import ace.actually.reforested.bees.blocks.GenericInventory;
+import ace.actually.reforested.industry.GenericInventory;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;

@@ -235,6 +235,12 @@ public class WoodBlockBuilder {
                 .criterion("criteria", has(LOG))
                 .offerTo(exporter,Identifier.of("reforested","craft_"+ PLANKS.getName().getString().toLowerCase().replace(" ","_")));
 
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.TRANSPORTATION, CHEST_BOAT)
+                .input(BOAT)
+                .input(Items.CHEST)
+                .criterion("criteria", has(PLANKS))
+                .offerTo(exporter,Identifier.of("reforested","craft_"+ CHEST_BOAT.getName().getString().toLowerCase().replace(" ","_")));
+
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, WOOD)
                 .pattern("LL")
                 .pattern("LL")
@@ -262,6 +268,13 @@ public class WoodBlockBuilder {
                 .input('P', PLANKS)
                 .criterion("has_planks", has(PLANKS))
                 .offerTo(exporter, Identifier.of("reforested", "craft_"+ STAIRS.getName().getString().toLowerCase().replace(" ","_")));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.TRANSPORTATION, BOAT, 1)
+                .pattern("P P")
+                .pattern("PPP")
+                .input('P', PLANKS)
+                .criterion("has_planks", has(PLANKS))
+                .offerTo(exporter, Identifier.of("reforested", "craft_"+ BOAT.getName().getString().toLowerCase().replace(" ","_")));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, PRESSURE_PLATE)
                 .pattern("PP")

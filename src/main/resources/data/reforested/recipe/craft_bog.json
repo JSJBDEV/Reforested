@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "P": {
+      "item": "minecraft:dirt"
+    },
+    "S":
+    {
+      "tag": "minecraft:sand"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "SWS",
+    "PSP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "reforested:silk_weave"
+  }
+}
