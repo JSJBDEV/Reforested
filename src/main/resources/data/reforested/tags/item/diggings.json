@@ -3,6 +3,10 @@
   "values": [
     "#minecraft:stone_crafting_materials",
     "#minecraft:sand",
-    "minecraft:gravel"
+    "minecraft:gravel",
+    "minecraft:diorite",
+    "minecraft:andesite",
+    "minecraft:tuff",
+    "minecraft:granite"
   ]
 }

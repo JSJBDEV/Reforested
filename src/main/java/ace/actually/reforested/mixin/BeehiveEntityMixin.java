@@ -121,7 +121,6 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
             if(beehive.reforested$nextBreedingCheck()==-1)
             {
                 beehive.reforested$setNextBreedingCheck(world.getTime()+5000); //5000
-                System.out.println("started ticker!");
             }
             if(!blockEntity.isFullOfBees() && world.getTime()>beehive.reforested$nextBreedingCheck())
             {
@@ -147,7 +146,6 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
                             blockEntity.addBee(new BeehiveBlockEntity.BeeData(NbtComponent.of(compound),2400,2400));
                             typesInHive.add(instance.mutation());
                         }
-                        System.out.println("bee things!");
                         break;
                     }
                 }

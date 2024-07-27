@@ -44,12 +44,12 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.poi.PointOfInterestType;
@@ -88,6 +88,7 @@ public class Reforested implements ModInitializer {
 			.build();
 
 	public static final TagKey<Item> DIGGINGS = TagKey.of(RegistryKeys.ITEM,Identifier.of("reforested","diggings"));
+	public static final TagKey<Item> PLANTINGS = TagKey.of(RegistryKeys.ITEM,Identifier.of("reforested","plantings"));
 
 	@Override
 	public void onInitialize() {
@@ -271,7 +272,8 @@ public class Reforested implements ModInitializer {
 	public static final ArmorItem APIARISTS_JACKET = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.CHESTPLATE,new Item.Settings());
 	public static final ArmorItem APIARISTS_PANTS = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.LEGGINGS,new Item.Settings());
 	public static final ArmorItem APIARISTS_SHOES = new ArmorItem(APIARISTS_MATERIAL, ArmorItem.Type.BOOTS,new Item.Settings());
-	public static final BackpackItem BACKPACK_ITEM = new BackpackItem(new Item.Settings(),500);
+	public static final BackpackItem DIGGING_BACKPACK = new BackpackItem(new Item.Settings(),500,Reforested.DIGGINGS);
+	public static final BackpackItem BOTANISTS_BACKPACK = new BackpackItem(new Item.Settings(),500,Reforested.PLANTINGS);
 
 	private void registerOtherItems()
 	{
@@ -293,7 +295,8 @@ public class Reforested implements ModInitializer {
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","soldering_iron"),SOLDERING_IRON));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","circuit_board"),CIRCUIT_BOARD));
 		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","copper_gear"),COPPER_GEAR));
-		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","backpack"),BACKPACK_ITEM));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","digging_backpack"), DIGGING_BACKPACK));
+		INDUSTRY_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","botanists_backpack"), BOTANISTS_BACKPACK));
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_helmet"),APIARISTS_HAT));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_chestplate"),APIARISTS_JACKET));

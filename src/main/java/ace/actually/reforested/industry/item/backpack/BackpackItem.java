@@ -1,7 +1,6 @@
 package ace.actually.reforested.industry.item.backpack;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.industry.GenericInventory;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
@@ -13,7 +12,7 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -21,19 +20,25 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An item that stores items, kinda
+ * these backpacks don't have screens, there main idea is to collect material you otherwise wouldn't want in your inventory
+ * they have a pickup mode based on if the user used them whilst sneaking, picking up items in their item tag for anywhere that isn't the hotbar
+ * they can be shift-used on chests (or any blockEntity that implements Inventory) to deposit their contents.
+ */
 public class BackpackItem extends Item {
-    private int maxStorage = 200;
+    private final int maxStorage;
+    private final TagKey<Item> collects;
 
-    public BackpackItem(Settings settings,int maxStorage) {
+    public BackpackItem(Settings settings, int maxStorage, TagKey<Item> collects) {
         super(settings);
         this.maxStorage=maxStorage;
+        this.collects=collects;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class BackpackItem extends Item {
         if(entity instanceof PlayerEntity player && stack.getOrDefault(Reforested.BACKPACK_PICKUP_MODE,false))
         {
             for (int i = 9; i < player.getInventory().size(); i++) {
-                if(player.getInventory().getStack(i).isIn(Reforested.DIGGINGS))
+                if(player.getInventory().getStack(i).isIn(collects))
                 {
                     ItemStack in = player.getInventory().getStack(i);
                     if (addItemToBag(stack,in))
@@ -133,6 +138,7 @@ public class BackpackItem extends Item {
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
         NbtCompound compound = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT).copyNbt();
+        tooltip.add(Text.translatable(collects.getTranslationKey()));
         tooltip.add(Text.translatable("text.reforested.backpack.mode").append(": "+stack.getOrDefault(Reforested.BACKPACK_PICKUP_MODE,false)));
         tooltip.add(Text.translatable("text.reforested.backpack.max").append(": "+maxStorage));
         for(String key: compound.getKeys())

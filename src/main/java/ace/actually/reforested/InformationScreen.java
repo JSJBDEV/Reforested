@@ -10,6 +10,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class InformationScreen extends Screen {
     public static HashMap<String,String> PAGES = new HashMap<>();
     static
     {
+        PAGES.put("Index","information.reforested.index");
         PAGES.put("Trees","information.reforested.trees");
         PAGES.put("Bees","information.reforested.bees");
         PAGES.put("Compartments","information.reforested.compartments");
@@ -39,29 +41,49 @@ public class InformationScreen extends Screen {
     {
         for(String page: PAGES.keySet())
         {
-            String[] split = Text.translatable(PAGES.get(page)).getString().split(" ");
-            List<String> strings = new ArrayList<>();
-            String current = "";
-            for(String part: split)
+            String pageInformation = PAGES.get(page);
+            if(page.equals("Index"))
             {
-                if(part.equals("\n"))
+                StringBuilder v = new StringBuilder();
+                for(String ipage:PAGES.keySet())
                 {
-                    strings.add(current);
-                    current="";
+                    if(!ipage.equals(page))
+                    {
+                        v.append(ipage).append(" \n ");
+                    }
                 }
-                else if(current.length()+part.length()<30)
-                {
-                    current+=part+" ";
-                }
-                else
-                {
-                    strings.add(current);
-                    current=part+" ";
-                }
+
+                pageInformation=v.toString();
             }
-            strings.add(current);
+
+            String[] split = Text.translatable(pageInformation).getString().split(" ");
+            List<String> strings = getStrings(split);
             REFORMATTED_PAGES.put(page,strings.toArray(new String[0]));
         }
+    }
+
+    private static @NotNull List<String> getStrings(String[] split) {
+        List<String> strings = new ArrayList<>();
+        String current = "";
+        for(String part: split)
+        {
+            if(part.equals("\n"))
+            {
+                strings.add(current);
+                current="";
+            }
+            else if(current.length()+part.length()<30)
+            {
+                current+=part+" ";
+            }
+            else
+            {
+                strings.add(current);
+                current=part+" ";
+            }
+        }
+        strings.add(current);
+        return strings;
     }
 
     private TextFieldWidget search;
@@ -85,6 +107,9 @@ public class InformationScreen extends Screen {
                     } )
                     .dimensions(3 + width / 4,(20*i)+42,75,20).build()));
             i++;
+        }
+        for (int j = 6; j < pageWidgets.size(); j++) {
+            pageWidgets.get(j).visible=false;
         }
         this.addDrawableChild(ButtonWidget.builder(Text.of(">"),a-> pageOffset++)
                 .dimensions(153 + width / 4,80+height/2,20,20).build());
@@ -119,15 +144,23 @@ public class InformationScreen extends Screen {
         {
             if(widget.getMessage().getString().toLowerCase().contains(search.getText().toLowerCase()))
             {
-                widget.visible=true;
-                widget.setY((20*i)+42);
-                i++;
+                if(i<6)
+                {
+                    widget.visible=true;
+                    widget.setY((20*i)+42);
+                    i++;
+                }
+
             }
             else if(Text.translatable(PAGES.get(widget.getMessage().getString())).getString().toLowerCase().contains(search.getText().toLowerCase()))
             {
-                widget.visible=true;
-                widget.setY((20*i)+42);
-                i++;
+                if(i<6)
+                {
+                    widget.visible=true;
+                    widget.setY((20*i)+42);
+                    i++;
+                }
+
             }
             else
             {

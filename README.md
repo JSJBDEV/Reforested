@@ -11,8 +11,10 @@ its a bit like what [Industrial Forgoing](https://modrinth.com/mod/industrial-fo
 - Bees! some bees make combs that make cool things, you can find the new bees in hives, they can mutate if there are 2 in a hive
 - Trees! new trees! they have different planks and woodstuffs, you can breed trees by putting saplings next to Tree Canes, some trees have fruit!
 - Compartments - they are like chests, but have multiple tabs and have a search bar
-- Multi-Farms - a block that requires power, but will place saplings and crops and harvest them (This may change in the future!) - they are suppose to be programmable with circuit boards, they aren't yet
+- Multi-Farms - a block that requires power, but will place saplings and crops and harvest them (This may change in the future!) - they are supposed to be programmable with circuit boards, they aren't yet
 - Peat you place "Block O' Bog" and eventually it turns into peat, that you can put into a peat engine to generate power
+- Apiarists gear - to stop you angering the bees, shame you need to first work with bees to make it...
+- Digger's Backpack - automagically picks up the stuff you don't want clogging your inventory when mining
 
 ## Planned Features
 
