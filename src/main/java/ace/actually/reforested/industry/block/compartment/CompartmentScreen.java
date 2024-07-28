@@ -62,7 +62,7 @@ public class CompartmentScreen extends HandledScreen<CompartmentScreenHandler> {
 
                 if(this.handler.slots.get(i) instanceof CompartmentScreenHandler.DisablableSlot disablableSlot)
                 {
-                    disablableSlot.enableSlot(i > 0 && i < 27);
+                    disablableSlot.enableSlot(i < 27);
                 }
             }
 

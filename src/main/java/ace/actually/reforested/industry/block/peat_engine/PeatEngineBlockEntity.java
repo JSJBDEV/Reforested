@@ -4,6 +4,7 @@ import ace.actually.reforested.Reforested;
 import ace.actually.reforested.industry.GenericInventory;
 import ace.actually.reforested.bees.blocks.ProgressData;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -90,7 +91,7 @@ public class PeatEngineBlockEntity extends BlockEntity implements GenericInvento
         {
             be.inventory.getFirst().decrement(1);
             be.setTicksToComplete(1000);
-
+            world.updateListeners(pos, state, state, Block.NOTIFY_LISTENERS);
         }
         if(be.ticksToComplete>0)
         {

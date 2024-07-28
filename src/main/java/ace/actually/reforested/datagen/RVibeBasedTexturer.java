@@ -97,8 +97,7 @@ public class RVibeBasedTexturer {
             makeTexture(BLOCK_PATH+"base_planks.png",BLOCK_PATH+builder.woodName+"_planks.png",c[0],c[1],c[2]);
 
 
-            makeTexture(BLOCK_PATH+"base_door_bottom.png",BLOCK_PATH+builder.woodName+"_door_bottom.png",c[0],c[1],c[2]);
-            makeTexture(BLOCK_PATH+"base_door_top.png",BLOCK_PATH+builder.woodName+"_door_top.png",c[0],c[1],c[2]);
+
 
 
             makeTexture(BLOCK_PATH+"stripped_base_log_"+useBase+".png",BLOCK_PATH+"stripped_"+builder.woodName+"_log.png",c[0],c[1],c[2]);
@@ -113,7 +112,12 @@ public class RVibeBasedTexturer {
 
             makeTexture(BLOCK_PATH+"base_sapling.png",BLOCK_PATH+builder.woodName+"_sapling.png",l[0],l[1],l[2]);
 
-            makeTexture(ITEM_PATH+"base_door.png",ITEM_PATH+builder.woodName+"_door.png",c[0],c[1],c[2]);
+            useBase = random.nextInt(3);
+            makeTexture(BLOCK_PATH+"base_door_bottom"+useBase+".png",BLOCK_PATH+builder.woodName+"_door_bottom.png",c[0],c[1],c[2]);
+            makeTexture(BLOCK_PATH+"base_door_top"+useBase+".png",BLOCK_PATH+builder.woodName+"_door_top.png",c[0],c[1],c[2]);
+            makeTexture(ITEM_PATH+"base_door"+useBase+".png",ITEM_PATH+builder.woodName+"_door.png",c[0],c[1],c[2]);
+
+
             makeTexture(ITEM_PATH+"base_sign.png",ITEM_PATH+builder.woodName+"_sign.png",c[0],c[1],c[2]);
             makeTexture(ITEM_PATH+"base_hanging_sign.png",ITEM_PATH+builder.woodName+"_hanging_sign.png",c[0],c[1],c[2]);
 

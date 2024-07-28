@@ -12,7 +12,7 @@
               "condition": "minecraft:block_state_property",
               "block": "reforested:bog",
               "properties": {
-                "is_mature": "true"
+                "is_mature": "4"
               }
             }
           ]

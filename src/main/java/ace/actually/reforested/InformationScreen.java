@@ -139,16 +139,21 @@ public class InformationScreen extends Screen {
             }
             line++;
         }
-        int i = 1;
+        int i = 0;
         for(ButtonWidget widget: pageWidgets)
         {
             if(widget.getMessage().getString().toLowerCase().contains(search.getText().toLowerCase()))
             {
                 if(i<6)
                 {
+                    i++;
                     widget.visible=true;
                     widget.setY((20*i)+42);
-                    i++;
+
+                }
+                else
+                {
+                    widget.visible=false;
                 }
 
             }
@@ -156,9 +161,14 @@ public class InformationScreen extends Screen {
             {
                 if(i<6)
                 {
+                    i++;
                     widget.visible=true;
                     widget.setY((20*i)+42);
-                    i++;
+
+                }
+                else
+                {
+                    widget.visible=false;
                 }
 
             }

@@ -39,6 +39,7 @@ public class ClientInit implements ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).SAPLING, RenderLayer.getCutout());
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).POTTED_SAPLING, RenderLayer.getCutout());
             BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).DOOR,RenderLayer.getCutout());
+            BlockRenderLayerMap.INSTANCE.putBlock(Reforested.WOOD_BLOCKS.get(i).TRAPDOOR,RenderLayer.getCutout());
         }
 
 

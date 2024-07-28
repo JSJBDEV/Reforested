@@ -1,9 +1,18 @@
 {
   "variants": {
-    "is_mature=false": {
+    "is_mature=0": {
       "model": "reforested:block/bog"
     },
-    "is_mature=true": {
+    "is_mature=1": {
+      "model": "reforested:block/bog"
+    },
+    "is_mature=2": {
+      "model": "reforested:block/bog"
+    },
+    "is_mature=3": {
+      "model": "reforested:block/bog"
+    },
+    "is_mature=4": {
       "model": "reforested:block/wet_bog"
     }
   }

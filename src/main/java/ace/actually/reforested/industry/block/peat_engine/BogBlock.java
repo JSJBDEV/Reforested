@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BogBlock extends Block {
 
-    public static BooleanProperty IS_MATURE = BooleanProperty.of("is_mature");
+    public static IntProperty IS_MATURE = IntProperty.of("is_mature",0,4);
     public BogBlock(Settings settings) {
         super(settings);
     }
@@ -28,7 +29,7 @@ public class BogBlock extends Block {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return super.getPlacementState(ctx).with(IS_MATURE,false);
+        return super.getPlacementState(ctx).with(IS_MATURE,0);
     }
 
     @Override
@@ -43,7 +44,11 @@ public class BogBlock extends Block {
             for (int j = -3; j < 4; j++) {
                 if(world.getBlockState(pos.add(i,0,j)).getFluidState().getFluid() == Fluids.WATER)
                 {
-                    world.setBlockState(pos,state.with(IS_MATURE,true));
+                    if(state.get(IS_MATURE)<4)
+                    {
+                        world.setBlockState(pos,state.with(IS_MATURE,state.get(IS_MATURE)+1));
+                    }
+
                 }
             }
         }
