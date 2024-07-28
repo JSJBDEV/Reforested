@@ -7,9 +7,7 @@ import ace.actually.reforested.bees.IReforestedBee;
 import ace.actually.reforested.bees.IReforestedBeehive;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FireBlock;
 import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.Entity;
@@ -17,10 +15,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -101,12 +97,7 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
     private static void injected(World world, BlockPos pos, BlockState state, BeehiveBlockEntity.BeeData bee, @Nullable List<Entity> entities, BeehiveBlockEntity.BeeState beeState, @Nullable BlockPos flowerPos, CallbackInfoReturnable<Boolean> cir, @Local(name="i") LocalIntRef localRef) {
 
         String btype = bee.entityData().copyNbt().getString("bee_type");
-        if(world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT) && !BeeLookups.BEE_LIKES_HUMIDITY_MAP.get(btype))
-        {
-            localRef.set(localRef.get()-1);
-        }
-        float preferred = BeeLookups.BEE_PREF_TEMP_MAP.get(btype);
-        if(world.getBiome(pos).value().getTemperature()>preferred+0.2 || world.getBiome(pos).value().getTemperature()<preferred-0.2)
+        if(BeeLookups.dislikesPosition(btype, world, pos))
         {
             localRef.set(localRef.get()-1);
         }

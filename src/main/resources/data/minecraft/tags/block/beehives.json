@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "reforested:apiary"
+    "reforested:apiary",
+    "reforested:alveary"
   ]
 }

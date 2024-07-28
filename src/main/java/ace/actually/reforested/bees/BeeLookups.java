@@ -1,9 +1,14 @@
 package ace.actually.reforested.bees;
 
 import ace.actually.reforested.Reforested;
-import ace.actually.reforested.datagen.RLanguageProvider;
+import ace.actually.reforested.bees.blocks.alveary.AlvearyDehumidifierBlockEntity;
+import ace.actually.reforested.bees.blocks.alveary.AlvearyHumidifierBlockEntity;
+import ace.actually.reforested.bees.blocks.alveary.AlvearyPoweredBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,4 +114,69 @@ public class BeeLookups {
 
     public record BreedingInstance(String type1, String type2, String mutation, float chance){}
 
+    public static boolean dislikesPosition(String btype, World world, BlockPos pos)
+    {
+        boolean notHumid = true;
+        boolean notDry = true;
+        boolean notHot = true;
+        boolean notCold = true;
+        if(world.getBlockState(pos).isOf(Reforested.ALVEARY_MAIN_BLOCK))
+        {
+            for (int i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    for (int k = -1; k < 2; k++) {
+                        BlockPos vpos = pos.add(i,j,k);
+                        if(world.getBlockEntity(vpos) instanceof AlvearyHumidifierBlockEntity humidifierBlockEntity)
+                        {
+                            if(humidifierBlockEntity.fluidStorage.amount>0)
+                            {
+                                notHumid=false;
+                            }
+                        }
+                        else if(world.getBlockEntity(vpos) instanceof AlvearyDehumidifierBlockEntity dehumidifierBlockEntity)
+                        {
+                            if(dehumidifierBlockEntity.fluidStorage.amount<dehumidifierBlockEntity.fluidStorage.getCapacity())
+                            {
+                                notDry=false;
+                            }
+                        }
+                        else if(world.getBlockEntity(vpos) instanceof AlvearyPoweredBlockEntity poweredBlockEntity)
+                        {
+                            if(poweredBlockEntity.energyStorage.amount>0)
+                            {
+                                if(poweredBlockEntity.getCachedState().isOf(Reforested.ALVEARY_COOLER_BLOCK))
+                                {
+                                    notHot=false;
+                                }
+                                else if(poweredBlockEntity.getCachedState().isOf(Reforested.ALVEARY_HEATER_BLOCK))
+                                {
+                                    notCold=false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //if the bee doesnt like humidity but is in a humid biome, dislike
+        if(world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT) && !BeeLookups.BEE_LIKES_HUMIDITY_MAP.get(btype) && notDry)
+        {
+            return true;
+        }
+        //if a bee does like humidty, but is not in a humid biome (and the alveary isn't making it humid), dislike
+        if(!world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT) && BeeLookups.BEE_LIKES_HUMIDITY_MAP.get(btype) && notHumid)
+        {
+            return true;
+        }
+        float preferred = BeeLookups.BEE_PREF_TEMP_MAP.get(btype);
+        if(world.getBiome(pos).value().getTemperature()>preferred+0.2 && notCold)
+        {
+            return true;
+        }
+        if(world.getBiome(pos).value().getTemperature()<preferred-0.2 && notHot)
+        {
+            return true;
+        }
+        return false;
+    }
 }

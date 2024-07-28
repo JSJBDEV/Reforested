@@ -46,9 +46,6 @@ dependencies {
 	include modApi('teamreborn:energy:4.1.0')
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation "maven.modrinth:emi:KRp4lW7A"
-	modImplementation "maven.modrinth:wthit:jOm0aorp"
-	modImplementation "maven.modrinth:badpackets:ac4a1Xj7"
 	
 }
 

@@ -2,6 +2,7 @@ package ace.actually.reforested;
 
 import ace.actually.reforested.bees.blocks.ApiaryBlock;
 import ace.actually.reforested.bees.blocks.ProgressData;
+import ace.actually.reforested.bees.blocks.alveary.*;
 import ace.actually.reforested.bees.blocks.centrifuge.*;
 import ace.actually.reforested.industry.block.compartment.CompartmentBlock;
 import ace.actually.reforested.industry.block.compartment.CompartmentBlockEntity;
@@ -23,6 +24,7 @@ import ace.actually.reforested.trees.blocks.wood_builders.PromisedWoodType;
 import ace.actually.reforested.trees.blocks.wood_builders.WoodBlockBuilder;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedHangingSignBlockEntity;
 import ace.actually.reforested.trees.blocks.signs.be.ModdedSignBlockEntity;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -33,6 +35,7 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentType;
@@ -45,7 +48,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -59,6 +61,7 @@ import org.slf4j.LoggerFactory;
 import team.reborn.energy.api.EnergyStorage;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static net.minecraft.world.poi.PointOfInterestTypes.POI_STATES_TO_TYPE;
 
@@ -148,9 +151,24 @@ public class Reforested implements ModInitializer {
 	public static final CompartmentBlock INT_COMPARTMENT_BLOCK = new CompartmentBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS));
 	public static final BogBlock BOG_BLOCK = new BogBlock(AbstractBlock.Settings.copy(Blocks.MUD).ticksRandomly());
 	public static final MultiFarmBlock MULTI_FARM_BLOCK = new MultiFarmBlock(AbstractBlock.Settings.copy(Blocks.IRON_BLOCK));
+
+	public static final AlvearyMainBlock ALVEARY_MAIN_BLOCK = new AlvearyMainBlock(AbstractBlock.Settings.copy(Blocks.BEEHIVE));
+	public static final AlvearyHumidifierBlock ALVEARY_HUMIDIFIER_BLOCK = new AlvearyHumidifierBlock(AbstractBlock.Settings.create());
+	public static final AlvearyDehumidifierBlock ALVEARY_DEHUMIDIFIER_BLOCK = new AlvearyDehumidifierBlock(AbstractBlock.Settings.create());
+	public static final AlvearyPoweredBlock ALVEARY_COOLER_BLOCK = new AlvearyPoweredBlock(AbstractBlock.Settings.create());
+	public static final AlvearyPoweredBlock ALVEARY_HEATER_BLOCK = new AlvearyPoweredBlock(AbstractBlock.Settings.create());
 	private void registerOtherBlocks()
 	{
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","apiary"),APIARY_BLOCK);
+
+
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","alveary"),ALVEARY_MAIN_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","alveary_humidifier"),ALVEARY_HUMIDIFIER_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","alveary_dehumidifier"),ALVEARY_DEHUMIDIFIER_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","alveary_heater"),ALVEARY_HEATER_BLOCK);
+		Registry.register(Registries.BLOCK,Identifier.of("reforested","alveary_cooler"),ALVEARY_COOLER_BLOCK);
+
+
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","centrifuge"),CENTRIFUGE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","tree_cane"),TREE_CANE_BLOCK);
 		Registry.register(Registries.BLOCK,Identifier.of("reforested","peat_engine"),PEAT_ENGINE_BLOCK);
@@ -166,6 +184,7 @@ public class Reforested implements ModInitializer {
 		ADD_BEEHIVE.add(Blocks.BEEHIVE);
 		ADD_BEEHIVE.add(Blocks.BEE_NEST);
 		ADD_BEEHIVE.add(Reforested.APIARY_BLOCK);
+		ADD_BEEHIVE.add(Reforested.ALVEARY_MAIN_BLOCK);
 
 
 	}
@@ -201,6 +220,24 @@ public class Reforested implements ModInitializer {
 			BlockEntityType.Builder.create(MultiFarmBlockEntity::new, MULTI_FARM_BLOCK).build()
 	);
 
+	public static BlockEntityType<AlvearyHumidifierBlockEntity> ALVEARY_HUMIDIFIER_BLOCK_ENTITY = Registry.register(
+			Registries.BLOCK_ENTITY_TYPE,
+			Identifier.of("reforested", "alveary_humidifier_block_entity"),
+			BlockEntityType.Builder.create(AlvearyHumidifierBlockEntity::new, ALVEARY_HUMIDIFIER_BLOCK).build()
+	);
+
+	public static BlockEntityType<AlvearyDehumidifierBlockEntity> ALVEARY_DEHUMIDIFIER_BLOCK_ENTITY = Registry.register(
+			Registries.BLOCK_ENTITY_TYPE,
+			Identifier.of("reforested", "alveary_dehumidifier_block_entity"),
+			BlockEntityType.Builder.create(AlvearyDehumidifierBlockEntity::new, ALVEARY_DEHUMIDIFIER_BLOCK).build()
+	);
+
+	public static BlockEntityType<AlvearyPoweredBlockEntity> ALVEARY_POWERED_BLOCK_ENTITY = Registry.register(
+			Registries.BLOCK_ENTITY_TYPE,
+			Identifier.of("reforested", "alveary_powered_block_entity"),
+			BlockEntityType.Builder.create(AlvearyPoweredBlockEntity::new, ALVEARY_COOLER_BLOCK,ALVEARY_HEATER_BLOCK).build()
+	);
+
 	public static BlockEntityType<ModdedSignBlockEntity> MODDED_SIGN_BLOCK_ENTITY;
 	public static BlockEntityType<ModdedHangingSignBlockEntity> MODDED_HANGING_SIGN_BLOCK_ENTITY;
 
@@ -231,6 +268,10 @@ public class Reforested implements ModInitializer {
 		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, CENTRIFUGE_BLOCK_ENTITY);
 		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, MULTIFARM_BLOCK_ENTITY);
 		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, PEAT_ENGINE_BLOCK_ENTITY);
+		EnergyStorage.SIDED.registerForBlockEntity((myBlockEntity, direction) -> myBlockEntity.energyStorage, ALVEARY_POWERED_BLOCK_ENTITY);
+
+		FluidStorage.SIDED.registerForBlockEntity((myTank, direction) -> myTank.fluidStorage, ALVEARY_DEHUMIDIFIER_BLOCK_ENTITY);
+		FluidStorage.SIDED.registerForBlockEntity((myTank, direction) -> myTank.fluidStorage, ALVEARY_HUMIDIFIER_BLOCK_ENTITY);
 
 	}
 
@@ -304,6 +345,11 @@ public class Reforested implements ModInitializer {
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_leggings"),APIARISTS_PANTS));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiarists_boots"),APIARISTS_SHOES));
 
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","alveary"),new BlockItem(ALVEARY_MAIN_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","alveary_heater"),new BlockItem(ALVEARY_HEATER_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","alveary_cooler"),new BlockItem(ALVEARY_COOLER_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","alveary_dehumidifier"),new BlockItem(ALVEARY_DEHUMIDIFIER_BLOCK,new Item.Settings())));
+		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","alveary_humidifier"),new BlockItem(ALVEARY_HUMIDIFIER_BLOCK,new Item.Settings())));
 
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","apiary"),new BlockItem(APIARY_BLOCK,new Item.Settings())));
 		BEE_ITEMS.add(Registry.register(Registries.ITEM,Identifier.of("reforested","centrifuge"),new BlockItem(CENTRIFUGE_BLOCK,new Item.Settings())));
@@ -343,9 +389,14 @@ public class Reforested implements ModInitializer {
 		registerPOI(
 				RegistryKey.of(RegistryKeys.POINT_OF_INTEREST_TYPE,Identifier.of("reforested","apiary")),
 				ImmutableSet.copyOf(APIARY_BLOCK.getStateManager().getStates()), 0, 1);
+		registerPOI(
+				RegistryKey.of(RegistryKeys.POINT_OF_INTEREST_TYPE,Identifier.of("reforested","alveary")),
+				ImmutableSet.copyOf(ALVEARY_MAIN_BLOCK.getStateManager().getStates()), 0, 1);
+
+
 	}
 
-	private static PointOfInterestType registerPOI(
+	public static PointOfInterestType registerPOI(
 			RegistryKey<PointOfInterestType> key, Set<BlockState> states, int ticketCount, int searchDistance
 	) {
 		PointOfInterestType pointOfInterestType = new PointOfInterestType(states, ticketCount, searchDistance);
