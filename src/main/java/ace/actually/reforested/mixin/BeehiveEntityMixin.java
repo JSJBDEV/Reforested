@@ -94,7 +94,7 @@ public abstract class BeehiveEntityMixin implements IReforestedBeehive {
     }
 
     @Inject(method = "releaseBee", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/random/Random;nextInt(I)I", shift = At.Shift.AFTER))
-    private static void injected(World world, BlockPos pos, BlockState state, BeehiveBlockEntity.BeeData bee, @Nullable List<Entity> entities, BeehiveBlockEntity.BeeState beeState, @Nullable BlockPos flowerPos, CallbackInfoReturnable<Boolean> cir, @Local(name="i") LocalIntRef localRef) {
+    private static void injected(World world, BlockPos pos, BlockState state, BeehiveBlockEntity.BeeData bee, @Nullable List<Entity> entities, BeehiveBlockEntity.BeeState beeState, @Nullable BlockPos flowerPos, CallbackInfoReturnable<Boolean> cir, @Local(ordinal = 0) LocalIntRef localRef) {
 
         String btype = bee.entityData().copyNbt().getString("bee_type");
         if(BeeLookups.dislikesPosition(btype, world, pos))
